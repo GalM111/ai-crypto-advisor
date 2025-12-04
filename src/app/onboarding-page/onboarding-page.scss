@@ -1,0 +1,21 @@
+.crypto-list {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.investor-type-list {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.investor-type {
+  border-color: red;
+}
+
+// body {
+//   display: flex;
+//   align-items: center;
+//   flex-wrap: wrap;
+// }

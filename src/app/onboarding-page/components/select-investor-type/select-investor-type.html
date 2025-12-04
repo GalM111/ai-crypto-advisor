@@ -1,0 +1,4 @@
+<div class="select-investor-type" [class.selected]="selected" (click)="onToggle()" role="button" tabindex="0"
+  (keydown.enter)="onToggle()" (keydown.space)="onToggle()" [attr.aria-pressed]="selected">
+  <h2>{{ investorType }}</h2>
+</div>

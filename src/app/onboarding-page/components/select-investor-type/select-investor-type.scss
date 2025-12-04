@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.select-investor-type {
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 10rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  user-select: none;
+}
+
+.select-investor-type.selected {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+  background-color: rgba(124, 58, 237, 0.08);
+}
+
+.select-investor-type:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}

@@ -1,0 +1,58 @@
+<!-- <div class="mainContainer"> -->
+<mat-stepper class="stepper" labelPosition="bottom" #stepper>
+  <mat-step [stepControl]="firstFormGroup" optional>
+    <form [formGroup]="firstFormGroup">
+      <mat-label>Select the cryptocurrencies you'd like to track and get insights about.</mat-label>
+      <ng-template matStepLabel>What crypto are you interested in?</ng-template>
+      <div class="crypto-list">
+        <app-select-crypto *ngFor="let c of cryptoOptions" [symbol]="c.symbol" [name]="c.name" [color]="c.color"
+          [selected]="selectedCryptos.includes(c.id)" (toggleSelect)="toggleCrypto(c)"></app-select-crypto>
+      </div>
+      <div>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step class="step" [stepControl]="secondFormGroup" optional>
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>What type of investor are you?</ng-template>
+      <mat-label>This helps us tailor the dashboard to your trading style.</mat-label>
+      <div class="investor-type-list">
+        <app-select-investor-type class="investor-type" *ngFor="let type of investorTypes" [investorType]="type"
+          [selected]="selectedInvestorType === type"
+          (toggleSelect)="toggleInvestorType(type)"></app-select-investor-type>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup" optional>
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>What content do you want to see?</ng-template>
+      <mat-label>Choose the types of content you want on your dashboard.</mat-label>
+      <div>
+        <app-select-content *ngFor="let content of contentTypes" [name]="content"
+          [selected]="selectedContentTypes.includes(content)"
+          (toggleSelect)="toggleContentType(content)"></app-select-content>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done. redir to main dashboard page add loading</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+<!-- </div -->

@@ -1,0 +1,7 @@
+<div class="select-crypto" [style.color]="color" [class.selected]="selected" (click)="onToggle()" role="button"
+  tabindex="0" (keydown.enter)="onToggle()" (keydown.space)="onToggle()">
+  <div class="labels">
+    <h2 class="symbol">{{ symbol }}</h2>
+    <h3 class="name">{{ name }}</h3>
+  </div>
+</div>
