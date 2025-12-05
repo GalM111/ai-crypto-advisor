@@ -23,6 +23,7 @@ export class WelcomePage {
     console.log('Login button clicked');
     console.log('Email:', this.email);
     console.log('Password:', this.password);
+    console.log(this.authService.currentUser)
 
     this.authService.login(this.email, this.password).subscribe({
       next: (user) => {

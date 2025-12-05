@@ -5,8 +5,8 @@
 
   <div *ngFor="let item of news">
     {{item.title}}
-    {{item.description}}
-    {{item.published_at}}
+    <!-- {{item.description}}
+    {{item.published_at}} -->
   </div>
 </div>
 <div class="crypto">
@@ -14,7 +14,15 @@
 </div>
 <div class="ai">
   <p>ai:</p>
+  <app-ai-insights></app-ai-insights>
+  <div>
+    <button (click)="sendMessage()">Send Message</button>
+    <div *ngFor="let message of messages">
+      {{ message }}
+    </div>
+  </div>
 </div>
 <div class="meme">
   <p>meme:</p>
+  <img src={{memeUrl}} alt="">
 </div>
