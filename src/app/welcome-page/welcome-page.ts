@@ -3,6 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Auth as AuthService } from '../services/auth';
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-welcome-page',
   imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
@@ -16,6 +18,8 @@ export class WelcomePage {
 
   constructor(private authService: AuthService) { }
   public login(): void {
+    console.log(environment.dashboardUrl);
+
     console.log('Login button clicked');
     console.log('Email:', this.email);
     console.log('Password:', this.password);

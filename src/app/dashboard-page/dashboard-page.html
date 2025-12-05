@@ -1,2 +1,20 @@
 <p>dashboard-page works!</p>
 <p>stats</p>
+<div class="news">
+  <p>News:</p>
+
+  <div *ngFor="let item of news">
+    {{item.title}}
+    {{item.description}}
+    {{item.published_at}}
+  </div>
+</div>
+<div class="crypto">
+  <p>coin prices:</p>
+</div>
+<div class="ai">
+  <p>ai:</p>
+</div>
+<div class="meme">
+  <p>meme:</p>
+</div>
