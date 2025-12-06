@@ -1,21 +1,19 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NewsService } from '../services/news-service';
-import { Observable, Subscription } from 'rxjs';
-import { NgFor } from '@angular/common';
 import { AiService } from '../services/ai-service';
 import { MemeService } from '../services/meme-service';
 import { SocketService } from '../services/socket-service';
-import { CryptoRow } from '../models/cryptoRow.interface';
 import { UserManagerService } from '../services/user-manager.service';
-import { NewsFeed } from "./components/news-feed/news-feed";
+import { CryptoRow } from '../models/cryptoRow.interface';
 import { NewsPost } from '../models/news.interface';
+import { NewsFeed } from "./components/news-feed/news-feed";
 import { LivePrices } from "./components/live-prices/live-prices";
 import { AiInsights } from "./components/ai-insights/ai-insights";
 import { MemeGif } from "./components/meme-gif/meme-gif";
 
 @Component({
   selector: 'app-dashboard-page',
-  // if this is a standalone component, keep this; otherwise you can remove it
   // standalone: true,
   imports: [NewsFeed, LivePrices, AiInsights, MemeGif],
   templateUrl: './dashboard-page.html',
@@ -27,7 +25,6 @@ export class DashboardPage {
   public aiInsights: any;
   public memeUrl: any;
 
-  // prices$!: Observable<CryptoRow[]>;
   prices: CryptoRow[] = [];
   private sub?: Subscription;
 
@@ -38,20 +35,18 @@ export class DashboardPage {
     private socketService: SocketService,
     private userManagerService: UserManagerService,
     private ngZone: NgZone,
-  ) {
-
-
-  }
+    private cdr: ChangeDetectorRef,   // 👈 add this
+  ) { }
 
   async ngOnInit() {
     console.log(this.userManagerService.currentUserData);
     console.log(this.userManagerService.currentUserData.assets);
 
     this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
-    // this.socketService.setCryptoIds('bitcoin');
 
     this.sub = this.socketService.prices$().subscribe({
       next: (data: any) => {
+        // ensure we are in Angular zone
         this.ngZone.run(() => {
           this.prices = Object.entries(data).map(([id, value]: any) => ({
             id,
@@ -59,6 +54,8 @@ export class DashboardPage {
             usdChange: value.usd_24h_change,
           }));
           console.log('Prices updated', this.prices);
+
+          this.cdr.markForCheck();   // 👈 force view update if using OnPush / external events
         });
       },
       error: (err) => console.error('prices$ error', err),
@@ -85,6 +82,7 @@ export class DashboardPage {
           this.ngZone.run(() => {
             this.aiInsights = res;
             console.log('aiInsights', this.aiInsights);
+            this.cdr.markForCheck();   // 👈 update view
           });
         },
         error: (err) => console.error('Failed to get insights', err),
@@ -99,11 +97,13 @@ export class DashboardPage {
           this.news = res as NewsPost[];
           this.newsLoading = false;
           console.log('news', this.news);
+          this.cdr.markForCheck();   // 👈 update view when news arrives
         });
       },
       error: (err) => {
         this.ngZone.run(() => {
           this.newsLoading = false;
+          this.cdr.markForCheck();   // 👈 update view even on error
         });
         console.error('Failed to get news', err);
       },
@@ -118,6 +118,7 @@ export class DashboardPage {
           this.ngZone.run(() => {
             this.memeUrl = res;
             console.log('memeUrl', this.memeUrl);
+            this.cdr.markForCheck();   // 👈 update view
           });
         },
         error: (err) => console.error('Failed to get meme', err),

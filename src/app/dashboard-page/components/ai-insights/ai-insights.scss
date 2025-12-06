@@ -1,4 +1,4 @@
-// Variables (Consistent with other components)
+// Variables
 $bg-color: #f4f6f8;
 $card-bg: #ffffff;
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -15,21 +15,18 @@ $ai-color-primary: #667eea;
 }
 
 .ai-widget {
-  background-color: $card-bg; // Use card bg directly for this one to standout
+  background-color: $card-bg;
   border-radius: 12px;
   padding: 1.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
-  // A subtle colored border to indicate "Special/AI" status
   border: 1px solid rgba($ai-color-primary, 0.2);
-  box-shadow: 0 4px 15px rgba(118, 75, 162, 0.08); // Purple-ish shadow
+  box-shadow: 0 4px 15px rgba(118, 75, 162, 0.08);
   position: relative;
   overflow: hidden;
 
-  // Optional: A faint background decorative element
   &::before {
     content: '';
     position: absolute;
@@ -48,7 +45,7 @@ $ai-color-primary: #667eea;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.25rem;
-    position: relative; // To sit above the background blur
+    position: relative;
 
     .title-group {
       display: flex;
@@ -59,7 +56,6 @@ $ai-color-primary: #667eea;
         margin: 0;
         font-size: 1.25rem;
         font-weight: 700;
-        // Gradient Text Effect
         background: $ai-gradient;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -97,10 +93,8 @@ $ai-color-primary: #667eea;
       font-size: 0.95rem;
       line-height: 1.6;
       color: $text-dark;
-      white-space: pre-wrap; // Preserves newlines from AI response
-      font-family: 'Inter', system-ui, sans-serif; // Clean, readable font
-
-      // Optional: Add a typewriter cursor effect logic if desired later
+      white-space: pre-wrap;
+      font-family: 'Inter', system-ui, sans-serif;
     }
 
     .footer {
@@ -115,9 +109,62 @@ $ai-color-primary: #667eea;
       }
     }
   }
+
+  // --- NEW LOADING STYLES ---
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-top: 0.5rem;
+
+    .loading-label {
+      font-size: 0.75rem;
+      color: $ai-color-primary;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      opacity: 0.8;
+      animation: pulse 1.5s infinite;
+    }
+
+    .skeleton-text {
+      height: 10px;
+      background: rgba($ai-color-primary, 0.1); // Light purple base
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+
+      // Shimmer overlay
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent);
+        transform: translateX(-100%);
+        animation: shimmer 1.5s infinite;
+      }
+
+      &.full {
+        width: 100%;
+      }
+
+      &.long {
+        width: 90%;
+      }
+
+      &.medium {
+        width: 60%;
+      }
+    }
+  }
 }
 
-// Gentle animation for the icon
+// Icon Animation
 @keyframes pulse-spin {
   0% {
     transform: scale(1) rotate(0deg);
@@ -132,5 +179,27 @@ $ai-color-primary: #667eea;
   100% {
     transform: scale(1) rotate(0deg);
     opacity: 0.8;
+  }
+}
+
+// Skeleton Shimmer Animation
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Text Pulse Animation
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
   }
 }
