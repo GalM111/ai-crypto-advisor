@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NewsService } from '../services/news-service';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom, map, Observable, Subscription } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { AiInsights } from "./components/ai-insights/ai-insights"; // or CommonModule
 import { AiService } from '../services/ai-service';
 import { MemeService } from '../services/meme-service';
 import { SocketService } from '../services/socket-service';
+import { CryptoRow } from '../models/cryptoRow.interface';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,11 +19,11 @@ export class DashboardPage {
   public aiInsights: any;
   public memeUrl: any = '';
 
+  prices$!: Observable<CryptoRow[]>;
 
+  prices: CryptoRow[] = [];
+  private sub?: Subscription;
 
-  title = 'Socket.IO + Angular Chat';
-  message = '';
-  messages: string[] = [];
   constructor(private newsService: NewsService, private aiService: AiService, private memeService: MemeService, private socketService: SocketService) {
 
   }
@@ -33,24 +34,25 @@ export class DashboardPage {
 
   async ngOnInit() {
 
-    this.socketService.onMessage((msg: string) => {
-      console.log(msg);
+    this.socketService.setCryptoIds('bitcoin,solana');
 
-      this.messages.push(msg);
-    });
+    this.sub = this.socketService.prices$().subscribe((data: any) => {
+      this.prices = Object.entries(data).map(([id, value]: any) => ({
+        id,
+        usd: value.usd,
+        usdChange: value.usd_24h_change,
+      }));
+      console.log(this.prices);
 
-    // Listen to connect / disconnect globally
-    this.socketService.socket.on('connect', () => {
-      console.log('Socket connected with id:', this.socketService.socket);
     });
 
     try {
-      // this.news = await firstValueFrom(this.newsService.getNews());
-      // console.log('news after await:', this.news);
-      // this.aiInsights = await firstValueFrom(this.aiService.generateAiContentByPrompt('hello'));
-      // console.log('AI Insights after await:', this.aiInsights);
-      // this.memeUrl = (await firstValueFrom(this.memeService.getMeme("cat")));
-      // console.log('Meme URL after await:', this.memeUrl);
+      this.news = await firstValueFrom(this.newsService.getNews());
+      console.log('news after await:', this.news);
+      this.aiInsights = await firstValueFrom(this.aiService.generateAiContentByPrompt('hello'));
+      console.log('AI Insights after await:', this.aiInsights);
+      this.memeUrl = (await firstValueFrom(this.memeService.getMeme("cat")));
+      console.log('Meme URL after await:', this.memeUrl);
     } catch (err) {
       console.error('Error loading news:', err);
 
@@ -61,19 +63,9 @@ export class DashboardPage {
 
   }
 
-  sendMessage(): void {
-    console.log("send msg clicked");
 
-    this.socketService.sendMessage("connection");
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
-
-
-
-
-  // ngOnDestroy() {
-  //   // Unsubscribe from WebSocket messages and close the connection
-  //   this.messageSubscription.unsubscribe();
-  //   this.webSocketService.closeConnection();
-  // } add this!!!!
 
 }

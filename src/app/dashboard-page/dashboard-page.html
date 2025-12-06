@@ -25,15 +25,18 @@
       <input [(ngModel)]="message" placeholder="Type a message..." />
       <button (click)="sendMessage()">Send</button>
     </div> -->
+      <div *ngFor="let price of prices">
+        {{price.id}}
+        {{price.usd}}
+        {{price.usdChange}}
 
-      <button (click)="sendMessage()">Send Message</button>
-      <div *ngFor="let message of messages">
-        {{ message }}
+        <!-- {{item.description}}
+    {{item.published_at}} -->
       </div>
-    </div>
 
-  </div>
-  <div class="meme">
-    <p>meme:</p>
-    <img src={{memeUrl}} alt="">
-  </div>
+
+    </div>
+    <div class="meme">
+      <p>meme:</p>
+      <img src={{memeUrl}} alt="">
+    </div>

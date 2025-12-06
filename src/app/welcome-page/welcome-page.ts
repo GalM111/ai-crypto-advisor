@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Auth as AuthService } from '../services/auth';
 import { environment } from '../../environments/environment';
+import { User } from '../services/user';
 
 @Component({
   selector: 'app-welcome-page',
@@ -16,7 +17,7 @@ export class WelcomePage {
   public email: string = '';
   public password: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: User) { }
   public login(): void {
     console.log(environment.dashboardUrl);
 
