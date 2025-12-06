@@ -16,6 +16,7 @@ import { ContentType as CONTENT_TYPE } from '../models/content-types';
 import { CreateUserDataDto, UserManagerService } from '../services/user-manager.service';
 import { UpdateUserDataDto } from '../models/updateUserData.interface';
 import { Router } from '@angular/router';
+import { UserData } from '../models/user-data';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -115,7 +116,7 @@ export class OnboardingPage {
       next: (res) => {
         console.log('updated:', res)
         localStorage.setItem('currentUserData', JSON.stringify(res));
-        this.userManagerService.currentUserData = res;
+        this.userManagerService.currentUserData = res as UserData;
         console.log(res);
 
       },

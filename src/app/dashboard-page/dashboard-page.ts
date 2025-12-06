@@ -11,6 +11,9 @@ import { NewsFeed } from "./components/news-feed/news-feed";
 import { LivePrices } from "./components/live-prices/live-prices";
 import { AiInsights } from "./components/ai-insights/ai-insights";
 import { MemeGif } from "./components/meme-gif/meme-gif";
+import { Auth as AuthService } from '../services/auth';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard-page',
@@ -35,7 +38,9 @@ export class DashboardPage {
     private socketService: SocketService,
     private userManagerService: UserManagerService,
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,   // 👈 add this
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   async ngOnInit() {
@@ -65,6 +70,9 @@ export class DashboardPage {
   }
 
   refreshDashboard(): void {
+    console.log(this.userManagerService.currentUserData);
+    console.log(this.authService.currentUser);
+
     this.loadDashboardData();
   }
 
@@ -125,7 +133,16 @@ export class DashboardPage {
       });
   }
 
+  public logout() {
+    this.ngOnDestroy();
+    this.router.navigate(['']);
+
+  }
+
   ngOnDestroy(): void {
+    console.log("ngOnDestroy");
+
     this.sub?.unsubscribe();
+    this.authService.logout();
   }
 }

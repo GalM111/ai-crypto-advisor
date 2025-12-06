@@ -6,6 +6,7 @@ import { UpdateUserDataDto } from '../models/updateUserData.interface';
 import { UserData } from '../models/user-data';
 
 export interface CreateUserDataDto {
+  _id?: string,
   name: string;
   email: string;
   assets: string[];
@@ -59,7 +60,7 @@ export class UserManagerService {
   //   // return
   // }
 
-  public createUserData(body: CreateUserDataDto): Observable<any> {
+  public createUserData(body: any): Observable<any> {
     return this.http.post(`${this.API_URL}/userdata`, body);
   }
 

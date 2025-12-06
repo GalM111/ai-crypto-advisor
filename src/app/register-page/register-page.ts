@@ -38,36 +38,47 @@ export class RegisterPage {
     }
     this.isLoading = true;
 
-    this.auth.register(this.name, this.email, this.password).subscribe(
-      (response) => {
-        alert('Registration successful!');
+    this.auth.register(this.name, this.email, this.password).subscribe({
+      next: (response: any) => {
+        console.log('Auth registered:', response);
+        this.registerUserDataAndReRoute(response?.email || this.email, response?.username || this.name);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        alert('Registration failed: ' + (error.error?.message || error.message));
+      },
+    });
+  }
+  public registerUserDataAndReRoute(email: any, name: any) {
+    const payload = {
+      // _id: (response.data._id) as string,
+      name,
+      email,
+      assets: [],
+      investorType: null,
+      contentType: []
+    };
 
-        const payload: CreateUserDataDto = {
-          name: this.name,
-          email: this.email,
-          assets: [],
-          investorType: null,
-          contentType: []
-        };
-
-        this.userManagerService.createUserData(payload).subscribe({
-          next: (res) => {
-            console.log('Created:', res)
-            this.userManagerService.currentUserData = res as UserData;
-          },
-          error: err => console.error('Create failed:', err)
-        });
+    this.userManagerService.createUserData(payload).subscribe({
+      next: (res) => {
+        console.log('Created:', res)
+        this.userManagerService.currentUserData = res as UserData;
+        localStorage.setItem('currentUserData', JSON.stringify(this.userManagerService.currentUserData));
         this.name = '';
         this.email = '';
         this.password = '';
-
+        this.isLoading = false;
         this.router.navigate(['/onboarding']);
-
       },
-      (error) => {
-        alert('Registration failed: ' + error.error?.message || error.message);
+      error: err => {
+        this.isLoading = false;
+        console.error('Create failed:', err);
+        alert('Failed to create user profile');
       }
-    );
+    });
+
+
+
   }
 
   navigateToLogin() {
