@@ -15,7 +15,7 @@ import { SelectContent } from "./components/select-content/select-content";
 import { ContentType as CONTENT_TYPE } from '../models/content-types';
 import { CreateUserDataDto, UserManagerService } from '../services/user-manager.service';
 import { UpdateUserDataDto } from '../models/updateUserData.interface';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -50,6 +50,9 @@ export class OnboardingPage {
 
   contentTypes: string[] = CONTENT_TYPE;
   selectedContentTypes: string[] = [];
+
+  isLoading = false;
+  router: any;
 
 
   constructor(private fb: FormBuilder, private userManagerService: UserManagerService) {
@@ -123,5 +126,23 @@ export class OnboardingPage {
 
 
 
+  }
+
+  // Final Submission Logic
+  async finishSetup() {
+    await this.submitNewUserData();
+    this.isLoading = true;
+
+    // Simulate API call to save user preferences
+    setTimeout(() => {
+      console.log('User Data Submitted', {
+        cryptos: this.selectedCryptos,
+        type: this.selectedInvestorType,
+        content: this.selectedContentTypes
+      });
+
+      // Navigate to Dashboard
+      this.router.navigate(['/dashboard']);
+    }, 2000);
   }
 }

@@ -1,21 +1,222 @@
-.crypto-list {
+// --- VARIABLES (Consistent with Dashboard) ---
+$bg-dark: #0f1115;
+$card-bg: #181b21;
+$neon-blue: #3b82f6;
+$neon-purple: #8b5cf6;
+$text-white: #ffffff;
+$text-muted: #94a3b8;
+$border-color: #2d3748;
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $bg-dark;
+  // Optional: Cool background mesh gradient
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba($neon-purple, 0.15) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba($neon-blue, 0.15) 0%, transparent 20%);
+}
+
+.onboarding-container {
   display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
-.investor-type-list {
+.glass-card {
+  background: rgba($card-bg, 0.7); // Glass effect base
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      color: $text-white;
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: -1px;
+    }
+
+    p {
+      color: $text-muted;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+// --- INNER CONTENT STYLING ---
+
+.step-content {
+  min-height: 300px; // Prevent height jumping between steps
+  padding: 1rem 0;
+
+  .step-title {
+    color: $text-white;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-subtitle {
+    color: $text-muted;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+// Grids for the child components
+.crypto-grid,
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.investor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+// Actions Bar
+.actions {
   display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+
+  &.centered-actions {
+    justify-content: center;
+  }
 }
 
-.investor-type {
-  border-color: red;
+// --- BUTTONS ---
+button.mat-mdc-button-base {
+  border-radius: 8px;
+  padding: 0 1.5rem;
+  height: 48px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-// body {
-//   display: flex;
-//   align-items: center;
-//   flex-wrap: wrap;
-// }
+.btn-primary {
+  background: linear-gradient(135deg, $neon-blue, darken($neon-blue, 10%)) !important;
+  color: white !important;
+  border: none;
+
+  &.glow {
+    box-shadow: 0 0 15px rgba($neon-blue, 0.4);
+  }
+}
+
+.btn-secondary {
+  border: 1px solid $border-color !important;
+  color: $text-muted !important;
+  background: transparent !important;
+
+  &:hover {
+    border-color: $text-white !important;
+    color: $text-white !important;
+  }
+}
+
+// --- FINAL STEP STYLING ---
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.icon-circle {
+  font-size: 3rem;
+  background: rgba($neon-blue, 0.1);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+// Loading Spinner
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba($neon-blue, 0.3);
+  border-radius: 50%;
+  border-top-color: $neon-blue;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// =========================================================
+// MATERIAL STEPPER OVERRIDES (The Dark Mode Magic)
+// =========================================================
+
+::ng-deep .custom-stepper {
+  background: transparent !important;
+
+  // 1. The Header Strip
+  .mat-step-header {
+    background-color: transparent !important;
+
+    // The Line between circles
+    .mat-step-header-ripple {
+      display: none;
+    }
+
+    // Hide ripple
+  }
+
+  // 2. The Circle (Icon)
+  .mat-step-icon {
+    background-color: transparent !important;
+    border: 2px solid $border-color;
+    color: $text-muted !important; // Number color inside
+
+    // Selected State
+    &.mat-step-icon-selected {
+      background-color: $neon-blue !important;
+      border-color: $neon-blue;
+      color: white !important;
+    }
+  }
+
+  // 3. The Label Text (Bottom)
+  .mat-step-label {
+    color: $text-muted !important;
+    font-size: 0.85rem;
+
+    &.mat-step-label-selected {
+      color: $text-white !important;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba($text-white, 0.3);
+    }
+  }
+
+  // 4. The Connector Lines
+  .mat-stepper-horizontal-line {
+    border-top-color: $border-color !important;
+  }
+}

@@ -1,60 +1,105 @@
-<!-- <div class="mainContainer"> -->
-<mat-stepper class="stepper" labelPosition="bottom" #stepper>
-  <mat-step [stepControl]="firstFormGroup" optional>
-    <form [formGroup]="firstFormGroup">
-      <mat-label>Select the cryptocurrencies you'd like to track and get insights about.</mat-label>
-      <ng-template matStepLabel>What crypto are you interested in?</ng-template>
-      <div class="crypto-list">
-        <app-select-crypto *ngFor="let c of cryptoOptions" [symbol]="c.symbol" [name]="c.name" [color]="c.color"
-          [selected]="selectedCryptos.includes(c.id)" (toggleSelect)="toggleCrypto(c)"></app-select-crypto>
-      </div>
-      <div>
-        <button matButton matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+<div class="onboarding-container">
 
-  <mat-step class="step" [stepControl]="secondFormGroup" optional>
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>What type of investor are you?</ng-template>
-      <mat-label>This helps us tailor the dashboard to your trading style.</mat-label>
-      <div class="investor-type-list">
-        <app-select-investor-type class="investor-type" *ngFor="let type of investorTypes" [investorType]="type"
-          [selected]="selectedInvestorType === type"
-          (toggleSelect)="toggleInvestorType(type)"></app-select-investor-type>
-      </div>
-      <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+  <div class="glass-card">
+    <header class="form-header">
+      <h1>Setup Your Profile</h1>
+      <p>Let's personalize your dashboard experience.</p>
+    </header>
 
-  <mat-step [stepControl]="thirdFormGroup" optional>
-    <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>What content do you want to see?</ng-template>
-      <mat-label>Choose the types of content you want on your dashboard.</mat-label>
-      <div>
-        <app-select-content *ngFor="let content of contentTypes" [name]="content"
-          [selected]="selectedContentTypes.includes(content)"
-          (toggleSelect)="toggleContentType(content)"></app-select-content>
-      </div>
-      <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+    <mat-stepper class="custom-stepper" labelPosition="bottom" #stepper linear>
 
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done. redir to main dashboard page add loading</p>
-    <div>
-      <button matButton matStepperPrevious>Back</button>
-      <button matButton (click)="stepper.reset()">Reset</button>
-      <button matButton matStepperNext (click)="submitNewUserData()">FINISH</button>
+      <mat-step [stepControl]="firstFormGroup" optional>
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Assets</ng-template>
 
-    </div>
-  </mat-step>
-</mat-stepper>
-<!-- </div -->
+          <div class="step-content">
+            <h2 class="step-title">Which assets do you hold?</h2>
+            <p class="step-subtitle">Select the cryptocurrencies you'd like to track.</p>
+
+            <div class="crypto-grid">
+              <app-select-crypto *ngFor="let c of cryptoOptions" [symbol]="c.symbol" [name]="c.name" [color]="c.color"
+                [selected]="selectedCryptos.includes(c.id)" (toggleSelect)="toggleCrypto(c)">
+              </app-select-crypto>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" mat-button matStepperNext>Next Step</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup" optional>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Persona</ng-template>
+
+          <div class="step-content">
+            <h2 class="step-title">What type of investor are you?</h2>
+            <p class="step-subtitle">This helps us tailor the risk analysis algorithms.</p>
+
+            <div class="investor-grid">
+              <app-select-investor-type *ngFor="let type of investorTypes" [investorType]="type"
+                [selected]="selectedInvestorType === type" (toggleSelect)="toggleInvestorType(type)">
+              </app-select-investor-type>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-secondary" mat-button matStepperPrevious>Back</button>
+            <button class="btn-primary" mat-button matStepperNext>Next Step</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="thirdFormGroup" optional>
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Content</ng-template>
+
+          <div class="step-content">
+            <h2 class="step-title">Customize your feed</h2>
+            <p class="step-subtitle">Choose the widgets you want on your dashboard.</p>
+
+            <div class="content-grid">
+              <app-select-content *ngFor="let content of contentTypes" [name]="content"
+                [selected]="selectedContentTypes.includes(content)" (toggleSelect)="toggleContentType(content)">
+              </app-select-content>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-secondary" mat-button matStepperPrevious>Back</button>
+            <button class="btn-primary" mat-button matStepperNext>Next Step</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Finish</ng-template>
+
+        <div class="step-content centered-content">
+
+          <div *ngIf="!isLoading; else loadingState" class="confirmation-box">
+            <div class="icon-circle">✨</div>
+            <h2>You're all set!</h2>
+            <p>We have configured your dashboard based on your preferences.</p>
+
+            <div class="actions centered-actions">
+              <button class="btn-secondary" mat-button matStepperPrevious>Back</button>
+              <button class="btn-primary glow" mat-button (click)="finishSetup()">Launch Dashboard</button>
+            </div>
+          </div>
+
+          <ng-template #loadingState>
+            <div class="loading-box">
+              <div class="spinner"></div>
+              <h3>Generating Insights...</h3>
+              <p>Redirecting you to the market feed.</p>
+            </div>
+          </ng-template>
+
+        </div>
+      </mat-step>
+
+    </mat-stepper>
+  </div>
+</div>
