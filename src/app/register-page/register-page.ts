@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { FormsModule } from '@angular/forms';
+import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { Auth } from '../services/auth';
 import { CreateUserDataDto, UserManagerService } from '../services/user-manager.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-register-page',
-  imports: [MatFormField, MatLabel, FormsModule, MatButtonModule, MatInputModule],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule, MatCheckbox],
   templateUrl: './register-page.html',
   styleUrl: './register-page.scss',
 })
@@ -20,16 +24,19 @@ export class RegisterPage {
   public email: string = '';
   public password: string = '';
 
+  hidePassword = true;
+  isLoading = false;
 
 
 
-  constructor(private auth: Auth, private userManagerService: UserManagerService) { }
+  constructor(private auth: Auth, private userManagerService: UserManagerService, private router: Router) { }
 
   public onRegister(): void {
     if (!this.name || !this.email || !this.password) {
       alert('Please fill in all fields');
       return;
     }
+    this.isLoading = true;
 
     this.auth.register(this.name, this.email, this.password).subscribe(
       (response) => {
@@ -51,10 +58,16 @@ export class RegisterPage {
         this.email = '';
         this.password = '';
 
+        this.router.navigate(['/onboarding']);
+
       },
       (error) => {
         alert('Registration failed: ' + error.error?.message || error.message);
       }
     );
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']); // Assuming your login route is /login
   }
 }

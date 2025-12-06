@@ -1,18 +1,84 @@
-<div class="register-container">
-  <p>register-page works!</p>
-  <div class="form-container">
-    <mat-form-field>
-      <mat-label>Enter your name</mat-label>
-      <input matInput placeholder="name" [(ngModel)]="name" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter your email</mat-label>
-      <input matInput placeholder="email" [(ngModel)]="email" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="true ? 'password' : 'text'" [(ngModel)]="password" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onRegister()">Register</button>
+<div class="register-wrapper">
+
+  <div class="brand-panel">
+    <div class="brand-content">
+      <div class="logo-area">
+        <span class="icon">🚀</span>
+        <h2>Join the Future</h2>
+      </div>
+
+      <ul class="benefits-list">
+        <li>
+          <mat-icon>insights</mat-icon>
+          <div>
+            <strong>AI-Powered Insights</strong>
+            <p>Get market predictions before the trend moves.</p>
+          </div>
+        </li>
+        <li>
+          <mat-icon>lock_person</mat-icon>
+          <div>
+            <strong>Bank-Grade Security</strong>
+            <p>Your data is encrypted and never shared.</p>
+          </div>
+        </li>
+        <li>
+          <mat-icon>notifications_active</mat-icon>
+          <div>
+            <strong>Real-time Alerts</strong>
+            <p>Never miss a dip or a pump again.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="glow-circle circle-1"></div>
+      <div class="glow-circle circle-2"></div>
+    </div>
   </div>
+
+  <div class="form-panel">
+    <div class="form-container">
+
+      <header>
+        <h1>Create Account</h1>
+        <p>Start your journey with AI Crypto Advisor.</p>
+      </header>
+
+      <form class="register-form">
+
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Full Name</mat-label>
+          <input matInput placeholder="Satoshi Nakamoto" [(ngModel)]="name" name="name" required>
+          <mat-icon matSuffix>person_outline</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="crypto@example.com" [(ngModel)]="email" name="email" required type="email">
+          <mat-icon matSuffix>mail_outline</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Choose Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-raised-button class="btn-register" (click)="onRegister()">
+          <span *ngIf="!isLoading">Create Account</span>
+          <span *ngIf="isLoading" class="loader"></span>
+        </button>
+
+      </form>
+
+      <div class="login-redirect">
+        <span>Already have an account?</span>
+        <a (click)="navigateToLogin()">Log In</a>
+      </div>
+
+    </div>
+  </div>
+
 </div>
