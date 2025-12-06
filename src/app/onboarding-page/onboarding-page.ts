@@ -13,6 +13,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectContent } from "./components/select-content/select-content";
 import { ContentType as CONTENT_TYPE } from '../models/content-types';
+import { CreateUserDataDto, UserManagerService } from '../services/user-manager.service';
+import { UpdateUserDataDto } from '../models/updateUserData.interface';
 
 
 @Component({
@@ -35,6 +37,7 @@ import { ContentType as CONTENT_TYPE } from '../models/content-types';
   styleUrl: './onboarding-page.scss',
 })
 export class OnboardingPage {
+
   // favoriteSeason: string = '';
   // seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
   firstFormGroup: FormGroup;
@@ -49,7 +52,7 @@ export class OnboardingPage {
   selectedContentTypes: string[] = [];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userManagerService: UserManagerService) {
     this.firstFormGroup = this.fb.group({
       firstCtrl: ['', Validators.required],
     });
@@ -91,5 +94,34 @@ export class OnboardingPage {
     }
     this.selectedContentTypes.push(contentType);
     console.log(this.selectedContentTypes);
+  }
+  public submitNewUserData() {
+    console.log("FINISH:");
+
+    console.log(this.selectedCryptos);
+    console.log(this.selectedInvestorType);
+    console.log(this.selectedContentTypes);
+    const payload: UpdateUserDataDto = {
+      assets: this.selectedCryptos,
+      investorType: this.selectedInvestorType,
+      contentType: this.selectedContentTypes
+    };
+    console.log(payload);
+    console.log(this.userManagerService.currentUserData._id);
+
+    this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, payload).subscribe({
+      next: (res) => {
+        console.log('updated:', res)
+        localStorage.setItem('currentUserData', JSON.stringify(res));
+        this.userManagerService.currentUserData = res;
+        console.log(res);
+
+      },
+      error: (err) => { console.error('Create failed:', err) }
+    });
+
+
+
+
   }
 }
