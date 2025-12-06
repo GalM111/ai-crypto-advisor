@@ -1,11 +1,64 @@
-<p>welcomasde-page works!</p>
-<mat-form-field>
-  <mat-label>Enter your email</mat-label>
-  <input matInput placeholder="pat@example.com" [(ngModel)]="email" required />
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Enter your password</mat-label>
-  <input matInput [type]="true ? 'password' : 'text'" [(ngModel)]="password" />
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="login()">Login</button>
-<button mat-raised-button color="accent">Register</button>
+<div class="login-wrapper">
+
+  <div class="brand-panel">
+    <div class="brand-content">
+      <div class="logo-area">
+        <span class="icon">🧠</span>
+        <h1>AI Crypto Advisor</h1>
+      </div>
+      <p class="tagline">
+        Unlock institutional-grade insights with the power of Artificial Intelligence.
+      </p>
+
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-card">
+
+      <header>
+        <h2>Welcome Back</h2>
+        <p>Please enter your details to sign in.</p>
+      </header>
+
+      <form class="login-form">
+
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="pat@example.com" [(ngModel)]="email" name="email" required autocomplete="email">
+          <mat-icon matSuffix>alternate_email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required
+            autocomplete="current-password">
+
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="forgot-pass">
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button mat-raised-button class="btn-login" (click)="login()">
+          <span *ngIf="!isLoading">Log In</span>
+          <span *ngIf="isLoading">Verifying...</span>
+        </button>
+
+      </form>
+
+      <div class="form-footer">
+        <span>Don't have an account?</span>
+        <button mat-button class="btn-register" (click)="goToRegister()">Create free account</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

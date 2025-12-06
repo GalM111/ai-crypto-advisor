@@ -5,19 +5,26 @@ import { MatInputModule } from '@angular/material/input';
 import { Auth as AuthService } from '../services/auth';
 import { environment } from '../../environments/environment';
 import { UserManagerService } from '../services/user-manager.service';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-welcome-page',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule],
   templateUrl: './welcome-page.html',
   styleUrl: './welcome-page.scss',
 })
 export class WelcomePage {
 
-  public email: string = '';
-  public password: string = '';
+  email = '';
+  password = '';
+  hidePassword = true;
+  isLoading = false
 
-  constructor(private authService: AuthService, private userManagerService: UserManagerService) { }
+  constructor(private authService: AuthService, private userManagerService: UserManagerService, private router: Router) { }
   public login(): void {
     console.log(environment.dashboardUrl);
 
@@ -36,6 +43,10 @@ export class WelcomePage {
         // Handle login error (e.g., show error message)
       }
     });
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
 

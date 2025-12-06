@@ -1,0 +1,263 @@
+// Variables
+$bg-dark: #0f1115;
+$panel-dark: #090a0d;
+$primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+$text-white: #ffffff;
+$text-muted: #94a3b8;
+$neon-glow: rgba(59, 130, 246, 0.5);
+
+:host {
+  display: block;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: $bg-dark;
+  overflow: hidden;
+
+  // --- LEFT SIDE (BRANDING) ---
+  .brand-panel {
+    flex: 1;
+    background-color: $panel-dark;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    // Background mesh/gradient
+    background: radial-gradient(circle at top right, #1e293b, $bg-dark);
+
+    .brand-content {
+      position: relative;
+      z-index: 2; // Above the blobs
+      padding: 4rem;
+      max-width: 500px;
+      color: $text-white;
+
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        .icon {
+          font-size: 2.5rem;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin: 0;
+          letter-spacing: -1px;
+        }
+      }
+
+      .tagline {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: $text-muted;
+      }
+    }
+
+    // Animated Blobs
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .blob-1 {
+      width: 400px;
+      height: 400px;
+      background: #3b82f6;
+      top: -100px;
+      left: -100px;
+    }
+
+    .blob-2 {
+      width: 300px;
+      height: 300px;
+      background: #8b5cf6;
+      bottom: 50px;
+      right: 50px;
+    }
+  }
+
+  // --- RIGHT SIDE (FORM) ---
+  .form-panel {
+    flex: 1; // Takes up equal space
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-dark;
+    padding: 2rem;
+
+    .form-card {
+      width: 100%;
+      max-width: 400px;
+
+      header {
+        margin-bottom: 2.5rem;
+
+        h2 {
+          color: $text-white;
+          font-size: 2rem;
+          margin: 0 0 0.5rem 0;
+        }
+
+        p {
+          color: $text-muted;
+          margin: 0;
+        }
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .forgot-pass {
+        text-align: right;
+        margin-top: -0.5rem;
+        margin-bottom: 1rem;
+
+        a {
+          color: $text-muted;
+          font-size: 0.85rem;
+          text-decoration: none;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #3b82f6;
+          }
+        }
+      }
+
+      .form-footer {
+        margin-top: 2rem;
+        text-align: center;
+        color: $text-muted;
+        font-size: 0.9rem;
+
+        .btn-register {
+          color: #3b82f6; // Link color
+          font-weight: 600;
+          min-width: auto;
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+
+  // Mobile View: Stack them
+  @media (max-width: 900px) {
+    flex-direction: column;
+
+    .brand-panel {
+      flex: 0 0 150px;
+      padding: 1rem;
+      align-items: flex-end;
+    }
+
+    .brand-content {
+      padding: 1rem !important;
+      transform: scale(0.8);
+    }
+
+    .blob {
+      display: none;
+    }
+
+    // Performance on mobile
+    .form-panel {
+      flex: 1;
+    }
+  }
+}
+
+// --- MATERIAL DESIGN OVERRIDES (DARK MODE) ---
+
+// 1. The Input Fields
+::ng-deep .custom-field {
+  width: 100%;
+
+  // Remove default background
+  .mat-mdc-text-field-wrapper {
+    background-color: transparent !important;
+  }
+
+  // Text Color
+  input.mat-mdc-input-element {
+    color: $text-white !important;
+    caret-color: #3b82f6;
+  }
+
+  // Label Color
+  .mat-mdc-floating-label {
+    color: $text-muted !important;
+  }
+
+  // Border (Outline) Colors
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  // Hover State
+  &:hover .mdc-notched-outline__leading,
+  &:hover .mdc-notched-outline__notch,
+  &:hover .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  // Focused State (Neon Blue)
+  &.mat-focused {
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #3b82f6 !important;
+      border-width: 2px !important;
+    }
+
+    .mat-mdc-floating-label {
+      color: #3b82f6 !important;
+    }
+  }
+
+  // Icons (Email/Eye)
+  .mat-icon {
+    color: $text-muted;
+  }
+}
+
+// 2. The Login Button
+.btn-login {
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: $primary-gradient !important;
+  color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); // Glow
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
