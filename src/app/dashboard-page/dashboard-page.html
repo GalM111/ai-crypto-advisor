@@ -1,23 +1,26 @@
-<p>dashboard-page works!</p>
+<!-- <p>dashboard-page works!</p>
+
 <p>stats</p>
 <p>prices:</p>
 <div *ngFor="let price of prices">
-  {{price.id}}
-  {{price.usd}}
-  {{price.usdChange}}
+  {{ price.id }}
+  {{ price.usd }}
+  {{ price.usdChange }}
 </div>
 
 <p>News:</p>
 <div *ngFor="let item of news">
-  {{item.title}}
+  {{ item.title }}
 </div>
 
 <div class="ai">
   <p>aiInsights:</p>
-  <p>{{aiInsights}}</p>
-  <div>
+  <p>{{ aiInsights }}</p>
 
-    <div class="meme">
-      <p>meme:</p>
-      <img src={{memeUrl}} alt="">
-    </div>
+  <div class="meme">
+    <p>meme:</p>
+    <img [src]="memeUrl" alt="" />
+  </div>
+</div> -->
+
+<app-news-feed [newsArr]="news" [loading]="newsLoading"></app-news-feed>

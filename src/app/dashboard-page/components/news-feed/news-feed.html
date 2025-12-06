@@ -1,1 +1,31 @@
-<p>news-feed works!</p>
+<div class="news-widget">
+  <header class="widget-header">
+    <h3>Latest News</h3>
+    <span class="badge" *ngIf="newsArr.length > 0">{{ newsArr.length }} New</span>
+  </header>
+
+  <div class="news-list" *ngIf="newsArr?.length; else emptyState">
+    <article class="news-card" *ngFor="let post of newsArr">
+
+      <div class="card-meta">
+        <span class="date">{{ post.published_at | date:'mediumDate' }}</span>
+      </div>
+
+      <h4 class="card-title">{{ post.title }}</h4>
+
+      <p class="card-desc">
+        {{ post.description }}
+      </p>
+
+    </article>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <p *ngIf="loading; else noItems">Loading latest news...</p>
+      <ng-template #noItems>
+        <p>No news available at the moment.</p>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

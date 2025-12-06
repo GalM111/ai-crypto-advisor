@@ -1,0 +1,131 @@
+// Variables for consistent theming
+$primary-color: #3f51b5;
+$text-dark: #333;
+$text-muted: #777;
+$bg-color: #f4f6f8;
+$card-bg: #ffffff;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+:host {
+  display: block;
+  height: 100%; // Ensure it takes full height of its grid cell
+}
+
+.news-widget {
+  background-color: $bg-color;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-dark;
+    }
+
+    .badge {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  }
+
+  // Scrollable container for the list
+  .news-list {
+    flex: 1;
+    overflow-y: auto; // Allows scrolling if list is long
+    padding-right: 0.5rem; // Space for scrollbar
+
+    // Custom Scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+  }
+
+  .news-card {
+    background-color: $card-bg;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: $shadow-sm;
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
+    cursor: default;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+      border-left-color: $primary-color; // Accent on hover
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-meta {
+      display: flex;
+      margin-bottom: 0.5rem;
+
+      .date {
+        font-size: 0.75rem;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
+    }
+
+    .card-title {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: $text-dark;
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      margin: 0;
+      font-size: 0.9rem;
+      color: lighten($text-dark, 20%);
+      line-height: 1.5;
+
+      // Line Clamping: Limits text to 3 lines followed by "..."
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: $text-muted;
+    font-style: italic;
+  }
+}
