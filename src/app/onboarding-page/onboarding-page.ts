@@ -52,10 +52,9 @@ export class OnboardingPage {
   selectedContentTypes: string[] = [];
 
   isLoading = false;
-  router: any;
 
 
-  constructor(private fb: FormBuilder, private userManagerService: UserManagerService) {
+  constructor(private fb: FormBuilder, private userManagerService: UserManagerService, private router: Router) {
     this.firstFormGroup = this.fb.group({
       firstCtrl: ['', Validators.required],
     });
@@ -141,8 +140,7 @@ export class OnboardingPage {
         content: this.selectedContentTypes
       });
 
-      // Navigate to Dashboard
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboards']);
     }, 2000);
   }
 }

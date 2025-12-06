@@ -68,6 +68,6 @@ export class RegisterPage {
   }
 
   navigateToLogin() {
-    this.router.navigate(['/login']); // Assuming your login route is /login
+    this.router.navigate(['/']);
   }
 }

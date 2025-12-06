@@ -37,6 +37,8 @@ export class WelcomePage {
       next: async (user) => {
         console.log('Login successful:', user);
         this.userManagerService.getUserDataByEmail(this.email);
+        this.router.navigate(['/dashboards']);
+
       },
       error: (error) => {
         console.error('Login failed:', error);
