@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Auth as AuthService } from '../services/auth';
 import { environment } from '../../environments/environment';
-import { User } from '../services/user';
+import { UserManagerService } from '../services/user-manager.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -17,7 +17,7 @@ export class WelcomePage {
   public email: string = '';
   public password: string = '';
 
-  constructor(private authService: AuthService, private userService: User) { }
+  constructor(private authService: AuthService, private userManagerService: UserManagerService) { }
   public login(): void {
     console.log(environment.dashboardUrl);
 
@@ -27,9 +27,9 @@ export class WelcomePage {
     console.log(this.authService.currentUser)
 
     this.authService.login(this.email, this.password).subscribe({
-      next: (user) => {
+      next: async (user) => {
         console.log('Login successful:', user);
-        // Handle successful login (e.g., navigate to dashboard)
+        this.userManagerService.getUserDataByEmail(this.email);
       },
       error: (error) => {
         console.error('Login failed:', error);

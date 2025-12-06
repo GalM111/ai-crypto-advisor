@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
+import { UserManagerService } from './user-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class Auth {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, userManagerService: UserManagerService) {
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser') || '{}')
     );
@@ -78,6 +79,7 @@ export class Auth {
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserData');
     this.currentUserSubject.next(null);
   }
 
