@@ -4,13 +4,14 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { UserManagerService } from './user-manager.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
   // private readonly API_URL = 'https://your-auth-server.com/api';
-  private readonly API_URL = 'http://localhost:5000/api';
+  private readonly API_URL = environment.authServiceUrl;
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 

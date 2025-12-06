@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  private readonly API_URL = `${environment.userManagerServiceUrl}/api`;
+  private readonly API_URL = `${environment.userManagerServiceUrl}`;
 
   constructor(private http: HttpClient) { }
   //todo delete this!

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserData } from '../models/user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,14 @@ import { Observable } from 'rxjs';
 export class MemeService {
   constructor(private http: HttpClient) { }
 
-  getMeme(title: string): Observable<any[]> {
+  public getMeme(title: string): Observable<any[]> {
     console.log(title);
 
     return this.http.post<any[]>(`${environment.dashboardUrl}/meme`, { params: { title } });
+  }
+  public getMemeAi(userData: UserData): Observable<any[]> {
+    // console.log(title);
+    return this.http.post<any[]>(`${environment.dashboardUrl}/memeAI`, { params: { userData } });
   }
 
   // getMeme(title?: string) {

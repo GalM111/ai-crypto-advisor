@@ -17,7 +17,7 @@ export interface CreateUserDataDto {
   providedIn: 'root',
 })
 export class UserManagerService {
-  private readonly API_URL = `${environment.userManagerServiceUrl}/api`;
+  private readonly API_URL = `${environment.userManagerServiceUrl}`;
   public currentUserData: UserData;
 
   constructor(private http: HttpClient) {

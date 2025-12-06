@@ -7,6 +7,7 @@ import { AiService } from '../services/ai-service';
 import { MemeService } from '../services/meme-service';
 import { SocketService } from '../services/socket-service';
 import { CryptoRow } from '../models/cryptoRow.interface';
+import { UserManagerService } from '../services/user-manager.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -24,7 +25,7 @@ export class DashboardPage {
   prices: CryptoRow[] = [];
   private sub?: Subscription;
 
-  constructor(private newsService: NewsService, private aiService: AiService, private memeService: MemeService, private socketService: SocketService) {
+  constructor(private newsService: NewsService, private aiService: AiService, private memeService: MemeService, private socketService: SocketService, private userManagerService: UserManagerService) {
 
   }
 
@@ -46,17 +47,34 @@ export class DashboardPage {
 
     });
 
-    try {
-      this.news = await firstValueFrom(this.newsService.getNews());
-      console.log('news after await:', this.news);
-      this.aiInsights = await firstValueFrom(this.aiService.generateAiContentByPrompt('hello'));
-      console.log('AI Insights after await:', this.aiInsights);
-      this.memeUrl = (await firstValueFrom(this.memeService.getMeme("cat")));
-      console.log('Meme URL after await:', this.memeUrl);
-    } catch (err) {
-      console.error('Error loading news:', err);
+    this.aiService.generateInsights(this.userManagerService.currentUserData).subscribe({
+      next: (res) => {
+        this.aiInsights = res;
+      },
+      error: err => console.error('Failed to get insights', err)
+    });
 
-    }
+    this.newsService.getNews().subscribe({
+      next: (res) => {
+        console.log("NEWS");
+
+        this.news = res;
+        console.log(this.news);
+
+      },
+      error: err => console.error('Failed to get news', err)
+
+    })
+
+    this.memeService.getMemeAi(this.userManagerService.currentUserData).subscribe({
+      next: (res) => {
+        console.log("MEME");
+        this.memeUrl = res;
+        console.log(this.news);
+      },
+      error: err => console.error('Failed to get news', err)
+
+    })
 
 
 
