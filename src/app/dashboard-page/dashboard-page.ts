@@ -44,9 +44,11 @@ export class DashboardPage {
   }
 
   async ngOnInit() {
+    console.log(this.userManagerService.currentUserData);
     console.log(this.userManagerService.currentUserData.assets);
 
     this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
+    // this.socketService.setCryptoIds('bitcoin');
 
     this.sub = this.socketService.prices$().subscribe({
       next: (data: any) => {

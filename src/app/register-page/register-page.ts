@@ -8,6 +8,7 @@ import { CreateUserDataDto, UserManagerService } from '../services/user-manager.
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { UserData } from '../models/user-data';
 
 @Component({
   selector: 'app-register-page',
@@ -50,7 +51,10 @@ export class RegisterPage {
         };
 
         this.userManagerService.createUserData(payload).subscribe({
-          next: res => console.log('Created:', res),
+          next: (res) => {
+            console.log('Created:', res)
+            this.userManagerService.currentUserData = res as UserData;
+          },
           error: err => console.error('Create failed:', err)
         });
         this.name = '';

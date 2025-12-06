@@ -129,6 +129,7 @@ export class OnboardingPage {
 
   // Final Submission Logic
   async finishSetup() {
+
     await this.submitNewUserData();
     this.isLoading = true;
 
