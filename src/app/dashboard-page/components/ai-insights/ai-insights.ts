@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { WebSocketService } from '../../../services/web-socket-service';
 
 @Component({
   selector: 'app-ai-insights',
@@ -8,5 +7,5 @@ import { WebSocketService } from '../../../services/web-socket-service';
   styleUrl: './ai-insights.scss',
 })
 export class AiInsights {
-  constructor(private webSocketService: WebSocketService) { }
+  constructor() { }
 }

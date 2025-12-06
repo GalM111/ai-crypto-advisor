@@ -14,15 +14,26 @@
 </div>
 <div class="ai">
   <p>ai:</p>
-  <app-ai-insights></app-ai-insights>
+  <!-- <app-ai-insights></app-ai-insights> -->
   <div>
-    <button (click)="sendMessage()">Send Message</button>
-    <div *ngFor="let message of messages">
-      {{ message }}
+
+    <div>
+      <!-- <h1>{{ title }}</h1>
+      <div class="chat-box">
+        <div *ngFor="let msg of messages">{{ msg }}</div>
+      </div>
+      <input [(ngModel)]="message" placeholder="Type a message..." />
+      <button (click)="sendMessage()">Send</button>
+    </div> -->
+
+      <button (click)="sendMessage()">Send Message</button>
+      <div *ngFor="let message of messages">
+        {{ message }}
+      </div>
     </div>
+
   </div>
-</div>
-<div class="meme">
-  <p>meme:</p>
-  <img src={{memeUrl}} alt="">
-</div>
+  <div class="meme">
+    <p>meme:</p>
+    <img src={{memeUrl}} alt="">
+  </div>
