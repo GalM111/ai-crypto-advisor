@@ -27,7 +27,7 @@ export class DashboardPage {
   public aiInsights: any;
   public memeUrl: any;
 
-  prices$!: Observable<CryptoRow[]>;
+  // prices$!: Observable<CryptoRow[]>;
   prices: CryptoRow[] = [];
   private sub?: Subscription;
 
@@ -62,6 +62,20 @@ export class DashboardPage {
       error: (err) => console.error('prices$ error', err),
     });
 
+    this.loadDashboardData();
+  }
+
+  refreshDashboard(): void {
+    this.loadDashboardData();
+  }
+
+  private loadDashboardData(): void {
+    this.fetchAiInsights();
+    this.fetchNews();
+    this.fetchMeme();
+  }
+
+  private fetchAiInsights(): void {
     this.aiService
       .generateInsights(this.userManagerService.currentUserData)
       .subscribe({
@@ -73,7 +87,10 @@ export class DashboardPage {
         },
         error: (err) => console.error('Failed to get insights', err),
       });
+  }
 
+  private fetchNews(): void {
+    this.newsLoading = true;
     this.newsService.getNews().subscribe({
       next: (res) => {
         this.ngZone.run(() => {
@@ -89,7 +106,9 @@ export class DashboardPage {
         console.error('Failed to get news', err);
       },
     });
+  }
 
+  private fetchMeme(): void {
     this.memeService
       .getMemeAi(this.userManagerService.currentUserData)
       .subscribe({

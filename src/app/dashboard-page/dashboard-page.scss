@@ -22,6 +22,15 @@ $glass-effect: rgba(255, 255, 255, 0.03);
 
   .main-header {
     margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .header-text {
+      flex: 1 1 260px;
+    }
 
     h1 {
       margin: 0;
@@ -39,6 +48,27 @@ $glass-effect: rgba(255, 255, 255, 0.03);
       margin: 0.5rem 0 0 0;
       color: $text-muted;
       font-size: 0.9rem;
+    }
+
+    .refresh-button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      background: linear-gradient(90deg, $neon-blue, $neon-purple);
+      color: $text-main;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(139, 92, 246, 0.35);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
   }
 
