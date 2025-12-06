@@ -10,5 +10,9 @@ import { CommonModule } from '@angular/common';
 export class AiInsights {
   @Input() aiInsights: string = "Loading market analysis...";
   now: Date = new Date();
-  constructor() { }
+  liked = false;
+
+  toggleLike(): void {
+    this.liked = !this.liked;
+  }
 }

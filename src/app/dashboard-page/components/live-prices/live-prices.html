@@ -7,24 +7,35 @@
   <div class="crypto-list">
     <div class="crypto-card" *ngFor="let coin of prices">
 
-      <div class="coin-info">
-        <span class="coin-name">{{ coin.id | titlecase }}</span>
-        <span class="coin-code">{{ coin.id | uppercase | slice:0:3 }}</span>
-      </div>
-
-      <div class="coin-stats">
-        <div class="price">
-          {{ coin.usd | currency:'USD':'symbol':'1.2-2' }}
+      <div class="coin-headline">
+        <div class="coin-info">
+          <span class="coin-name">{{ coin.id | titlecase }}</span>
+          <span class="coin-code">{{ coin.id | uppercase | slice:0:3 }}</span>
         </div>
 
-        <div class="change" [ngClass]="{'positive': coin.usdChange >= 0, 'negative': coin.usdChange < 0}">
+        <div class="coin-stats">
+          <div class="price">
+            {{ coin.usd | currency:'USD':'symbol':'1.2-2' }}
+          </div>
 
-          <span *ngIf="coin.usdChange >= 0">▲</span>
-          <span *ngIf="coin.usdChange < 0">▼</span>
+          <div class="change" [ngClass]="{'positive': coin.usdChange >= 0, 'negative': coin.usdChange < 0}">
 
-          {{ coin.usdChange / 100 | percent:'1.2-2' }}
+            <span *ngIf="coin.usdChange >= 0">&uarr;</span>
+            <span *ngIf="coin.usdChange < 0">&darr;</span>
+
+            {{ coin.usdChange / 100 | percent:'1.2-2' }}
+          </div>
         </div>
       </div>
+
+      <button
+        type="button"
+        class="coin-like"
+        [class.liked]="isLiked(coin.id)"
+        (click)="toggleLike(coin.id)"
+      >
+        {{ isLiked(coin.id) ? 'Unlike' : 'Like' }}
+      </button>
 
     </div>
   </div>

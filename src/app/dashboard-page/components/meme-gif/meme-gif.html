@@ -14,4 +14,13 @@
       </div>
     </ng-template>
   </div>
+
+  <button
+    type="button"
+    class="meme-like"
+    [class.liked]="liked"
+    (click)="toggleLike()"
+  >
+    {{ liked ? 'Unlike' : 'Like' }}
+  </button>
 </div>

@@ -8,4 +8,17 @@ import { CommonModule } from '@angular/common';
 })
 export class LivePrices {
   @Input() prices: any = [];
+  private likedCoins = new Set<string>();
+
+  toggleLike(coinId: string): void {
+    if (this.likedCoins.has(coinId)) {
+      this.likedCoins.delete(coinId);
+    } else {
+      this.likedCoins.add(coinId);
+    }
+  }
+
+  isLiked(coinId: string): boolean {
+    return this.likedCoins.has(coinId);
+  }
 }

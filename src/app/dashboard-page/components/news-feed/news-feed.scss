@@ -118,6 +118,31 @@ $shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
+    .like-button {
+      margin-top: 0.75rem;
+      border: 1px solid lighten($text-muted, 20%);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      background: #fff;
+      color: $text-dark;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.liked {
+        background: rgba($primary-color, 0.1);
+        border-color: $primary-color;
+        color: $primary-color;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
   }
 
   .empty-state {

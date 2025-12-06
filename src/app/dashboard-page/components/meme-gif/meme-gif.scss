@@ -80,6 +80,29 @@ $meme-accent: linear-gradient(45deg, #ff00cc, #333399);
       animation: pulse 1.5s infinite alternate;
     }
   }
+
+  .meme-like {
+    margin-top: 1rem;
+    align-self: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    background: #fff;
+    color: $text-dark;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.liked {
+      background: rgba(255, 0, 204, 0.12);
+      border-color: #ff00cc;
+      color: #ff00cc;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
 }
 
 @keyframes pulse {

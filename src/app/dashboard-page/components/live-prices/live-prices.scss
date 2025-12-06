@@ -84,12 +84,18 @@ $red-trend: #f44336; // Danger color
     margin-bottom: 0.75rem; // Slightly tighter spacing than news
     box-shadow: $shadow-sm;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.75rem;
     transition: transform 0.2s ease;
 
     &:hover {
       transform: scale(1.02); // Slight pop effect
+    }
+
+    .coin-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .coin-info {
@@ -135,6 +141,32 @@ $red-trend: #f44336; // Danger color
         &.negative {
           color: $red-trend;
         }
+      }
+    }
+
+    .coin-like {
+      align-self: flex-start;
+      border: 1px solid lighten($text-muted, 20%);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      background: #fff;
+      color: $text-dark;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      transition: all 0.2s ease;
+
+      &.liked {
+        border-color: $primary-color;
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+      }
+
+      &:hover {
+        transform: translateY(-1px);
       }
     }
   }

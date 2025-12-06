@@ -17,6 +17,15 @@
         {{ post.description }}
       </p>
 
+      <button
+        type="button"
+        class="like-button"
+        [class.liked]="isLiked(post)"
+        (click)="toggleLike(post)"
+      >
+        {{ isLiked(post) ? 'Unlike' : 'Like' }}
+      </button>
+
     </article>
   </div>
 
