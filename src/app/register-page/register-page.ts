@@ -8,11 +8,10 @@ import { CreateUserDataDto, UserManagerService } from '../services/user-manager.
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-register-page',
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule, MatCheckbox],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule],
   templateUrl: './register-page.html',
   styleUrl: './register-page.scss',
 })

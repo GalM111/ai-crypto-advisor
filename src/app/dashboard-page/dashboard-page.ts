@@ -17,7 +17,7 @@ import { MemeGif } from "./components/meme-gif/meme-gif";
   selector: 'app-dashboard-page',
   // if this is a standalone component, keep this; otherwise you can remove it
   // standalone: true,
-  imports: [NgFor, NewsFeed, LivePrices, AiInsights, MemeGif],
+  imports: [NewsFeed, LivePrices, AiInsights, MemeGif],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })
@@ -38,11 +38,15 @@ export class DashboardPage {
     private socketService: SocketService,
     private userManagerService: UserManagerService,
     private ngZone: NgZone,
-  ) { }
+  ) {
+
+
+  }
 
   async ngOnInit() {
+    console.log(this.userManagerService.currentUserData.assets);
 
-    this.socketService.setCryptoIds('bitcoin,solana');
+    this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
 
     this.sub = this.socketService.prices$().subscribe({
       next: (data: any) => {

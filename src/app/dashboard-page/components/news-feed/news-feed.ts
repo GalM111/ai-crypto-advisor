@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { NewsPost } from '../../../models/news.interface';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-news-feed',
-  imports: [NgFor, NgIf, DatePipe],
+  imports: [NgFor, NgIf, DatePipe, CommonModule],
   templateUrl: './news-feed.html',
   styleUrl: './news-feed.scss',
 })
