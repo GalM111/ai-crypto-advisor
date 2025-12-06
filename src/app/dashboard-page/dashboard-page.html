@@ -1,29 +1,37 @@
-<!-- <p>dashboard-page works!</p>
-
-<p>stats</p>
-<p>prices:</p>
-<div *ngFor="let price of prices">
-  {{ price.id }}
-  {{ price.usd }}
-  {{ price.usdChange }}
-</div>
-
-<p>News:</p>
-<div *ngFor="let item of news">
-  {{ item.title }}
-</div>
-
-<div class="ai">
-  <p>aiInsights:</p>
-  <p>{{ aiInsights }}</p>
-
-  <div class="meme">
-    <p>meme:</p>
-    <img [src]="memeUrl" alt="" />
-  </div>
-</div> -->
-
-<app-news-feed [newsArr]="news" [loading]="newsLoading"></app-news-feed>
+<!-- <app-news-feed [newsArr]="news" [loading]="newsLoading"></app-news-feed>
 <app-live-prices [prices]="prices"></app-live-prices>
 <app-ai-insights [aiInsights]="aiInsights"></app-ai-insights>
-<app-meme-gif [memeUrl]="memeUrl"></app-meme-gif>
+<app-meme-gif [memeUrl]="memeUrl"></app-meme-gif> -->
+
+
+<div class="dashboard-container">
+
+  <header class="main-header">
+    <h1>Crypto & AI Analytics</h1>
+    <p class="subtitle">Real-time market data powered by Artificial Intelligence</p>
+  </header>
+
+  <div class="dashboard-grid">
+
+    <div class="dashboard-item">
+      <app-news-feed [newsArr]="news" [loading]="newsLoading">
+      </app-news-feed>
+    </div>
+
+    <div class="dashboard-item">
+      <app-live-prices [prices]="prices">
+      </app-live-prices>
+    </div>
+
+    <div class="dashboard-item">
+      <app-ai-insights [aiInsights]="aiInsights">
+      </app-ai-insights>
+    </div>
+
+    <div class="dashboard-item">
+      <app-meme-gif [memeUrl]="memeUrl">
+      </app-meme-gif>
+    </div>
+
+  </div>
+</div>

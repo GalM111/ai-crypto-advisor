@@ -1,0 +1,78 @@
+// --- MODERN DARK THEME PALETTE ---
+$theme-bg: #0f1115; // Very dark (almost black) background
+$theme-card-bg: #181b21; // Slightly lighter for cards
+$theme-card-hover: #1f232b; // Lighter for hover states
+$text-main: #ffffff;
+$text-muted: #94a3b8; // Cool grey
+$border-color: #2d3748; // Subtle borders
+
+// Neon Accents
+$neon-blue: #3b82f6;
+$neon-purple: #8b5cf6;
+$neon-green: #10b981; // Bright Mint
+$neon-red: #ef4444; // Bright Coral
+$glass-effect: rgba(255, 255, 255, 0.03);
+
+.dashboard-container {
+  background-color: $theme-bg; // Dark Background
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  color: $text-main;
+
+  .main-header {
+    margin-bottom: 2rem;
+
+    h1 {
+      margin: 0;
+      color: $text-main;
+      font-size: 2rem;
+      letter-spacing: -0.5px; // Modern tight tracking
+
+      // Optional: Text Gradient
+      background: linear-gradient(90deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin: 0.5rem 0 0 0;
+      color: $text-muted;
+      font-size: 0.9rem;
+    }
+  }
+
+  .dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .dashboard-item {
+    flex: 1 1 calc(50% - 1.5rem);
+    height: 420px; // Slightly taller for breathing room
+    min-width: 320px;
+
+    // Smooth entry animation
+    animation: fadeUp 0.6s ease-out;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-item {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
