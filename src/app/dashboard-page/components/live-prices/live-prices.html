@@ -1,0 +1,31 @@
+<div class="crypto-widget">
+  <header class="widget-header">
+    <h3>Market Watch</h3>
+    <span class="refresh-icon">Live</span>
+  </header>
+
+  <div class="crypto-list">
+    <div class="crypto-card" *ngFor="let coin of prices">
+
+      <div class="coin-info">
+        <span class="coin-name">{{ coin.id | titlecase }}</span>
+        <span class="coin-code">{{ coin.id | uppercase | slice:0:3 }}</span>
+      </div>
+
+      <div class="coin-stats">
+        <div class="price">
+          {{ coin.usd | currency:'USD':'symbol':'1.2-2' }}
+        </div>
+
+        <div class="change" [ngClass]="{'positive': coin.usdChange >= 0, 'negative': coin.usdChange < 0}">
+
+          <span *ngIf="coin.usdChange >= 0">▲</span>
+          <span *ngIf="coin.usdChange < 0">▼</span>
+
+          {{ coin.usdChange / 100 | percent:'1.2-2' }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

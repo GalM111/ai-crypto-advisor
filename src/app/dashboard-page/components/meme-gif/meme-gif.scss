@@ -1,0 +1,93 @@
+// Shared Dashboard Variables
+$bg-color: #f4f6f8;
+$card-bg: #ffffff;
+$text-dark: #333;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+// Meme Specific Colors (Playful/Vaporwave vibes)
+$meme-frame-bg: #1a1a2e; // Dark background makes GIFs POP
+$meme-accent: linear-gradient(45deg, #ff00cc, #333399);
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.meme-widget {
+  // Consistent outer shell styling
+  background-color: $bg-color;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .widget-header {
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-dark;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  // The area holding the image
+  .meme-frame {
+    flex: 1; // Take up remaining vertical space
+    background-color: $meme-frame-bg;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: $shadow-sm;
+
+    // A subtle playful border glow
+    border: 2px solid transparent;
+    background-image: linear-gradient($meme-frame-bg, $meme-frame-bg), $meme-accent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    transition: all 0.3s ease;
+
+    // Interactive hover effect
+    &:hover {
+      box-shadow: $shadow-md;
+      transform: scale(1.01);
+    }
+
+    .the-gif {
+      // Crucial for handling various GIF sizes nicely
+      width: 100%;
+      height: 100%;
+      // 'contain' ensures the whole meme is visible (no cropping text).
+      // Use 'cover' if you prefer it filling the box entirely.
+      object-fit: contain;
+      display: block;
+      border-radius: 10px; // Slightly smaller radius than container
+    }
+
+    .loading-placeholder {
+      color: rgba(255, 255, 255, 0.6);
+      font-family: monospace;
+      animation: pulse 1.5s infinite alternate;
+    }
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

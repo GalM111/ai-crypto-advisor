@@ -1,0 +1,136 @@
+// Variables (Consistent with other components)
+$bg-color: #f4f6f8;
+$card-bg: #ffffff;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$text-dark: #333;
+$text-muted: #777;
+
+// AI Specific Variables
+$ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$ai-color-primary: #667eea;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.ai-widget {
+  background-color: $card-bg; // Use card bg directly for this one to standout
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  // A subtle colored border to indicate "Special/AI" status
+  border: 1px solid rgba($ai-color-primary, 0.2);
+  box-shadow: 0 4px 15px rgba(118, 75, 162, 0.08); // Purple-ish shadow
+  position: relative;
+  overflow: hidden;
+
+  // Optional: A faint background decorative element
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: $ai-gradient;
+    opacity: 0.1;
+    border-radius: 50%;
+    filter: blur(40px);
+  }
+
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    position: relative; // To sit above the background blur
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        // Gradient Text Effect
+        background: $ai-gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .ai-icon {
+        width: 20px;
+        height: 20px;
+        stroke: #764ba2;
+        animation: pulse-spin 3s infinite ease-in-out;
+      }
+    }
+
+    .badge-ai {
+      background: rgba($ai-color-primary, 0.1);
+      color: $ai-color-primary;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .insight-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    position: relative;
+
+    .insight-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: $text-dark;
+      white-space: pre-wrap; // Preserves newlines from AI response
+      font-family: 'Inter', system-ui, sans-serif; // Clean, readable font
+
+      // Optional: Add a typewriter cursor effect logic if desired later
+    }
+
+    .footer {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+
+      small {
+        color: $text-muted;
+        font-size: 0.75rem;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// Gentle animation for the icon
+@keyframes pulse-spin {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.1) rotate(10deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+}

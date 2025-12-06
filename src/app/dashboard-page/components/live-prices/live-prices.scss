@@ -1,0 +1,156 @@
+// Variables matching the News Component for consistency
+$primary-color: #3f51b5;
+$text-dark: #333;
+$text-muted: #777;
+$bg-color: #f4f6f8;
+$card-bg: #ffffff;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$green-trend: #4caf50; // Success color
+$red-trend: #f44336; // Danger color
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.crypto-widget {
+  background-color: $bg-color;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-dark;
+    }
+
+    .refresh-icon {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: $red-trend;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      // Pulsing dot effect
+      &::before {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: $red-trend;
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+      }
+    }
+  }
+
+  .crypto-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    // Custom Scrollbar (Same as News)
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+  }
+
+  .crypto-card {
+    background-color: $card-bg;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem; // Slightly tighter spacing than news
+    box-shadow: $shadow-sm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02); // Slight pop effect
+    }
+
+    .coin-info {
+      display: flex;
+      flex-direction: column;
+
+      .coin-name {
+        font-weight: 700;
+        color: $text-dark;
+        font-size: 1rem;
+      }
+
+      .coin-code {
+        font-size: 0.75rem;
+        color: $text-muted;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .coin-stats {
+      text-align: right;
+
+      .price {
+        font-family: 'Roboto Mono', monospace; // Good for numbers
+        font-weight: 600;
+        color: $text-dark;
+        font-size: 1rem;
+        margin-bottom: 2px;
+      }
+
+      .change {
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+
+        &.positive {
+          color: $green-trend;
+        }
+
+        &.negative {
+          color: $red-trend;
+        }
+      }
+    }
+  }
+}
+
+// Animation for the "Live" dot
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

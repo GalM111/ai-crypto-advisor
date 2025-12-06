@@ -1,0 +1,17 @@
+<div class="meme-widget">
+  <header class="widget-header">
+    <h3>👾 Market Vibe Check</h3>
+  </header>
+
+  <div class="meme-frame">
+    <ng-container *ngIf="memeUrl; else loadingState">
+      <img [src]="memeUrl" alt="AI-selected market mood GIF" class="the-gif" />
+    </ng-container>
+
+    <ng-template #loadingState>
+      <div class="loading-placeholder">
+        <span>Loading the vibes...</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

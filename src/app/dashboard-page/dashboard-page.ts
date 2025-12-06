@@ -9,12 +9,15 @@ import { CryptoRow } from '../models/cryptoRow.interface';
 import { UserManagerService } from '../services/user-manager.service';
 import { NewsFeed } from "./components/news-feed/news-feed";
 import { NewsPost } from '../models/news.interface';
+import { LivePrices } from "./components/live-prices/live-prices";
+import { AiInsights } from "./components/ai-insights/ai-insights";
+import { MemeGif } from "./components/meme-gif/meme-gif";
 
 @Component({
   selector: 'app-dashboard-page',
   // if this is a standalone component, keep this; otherwise you can remove it
   // standalone: true,
-  imports: [NgFor, NewsFeed],
+  imports: [NgFor, NewsFeed, LivePrices, AiInsights, MemeGif],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })
