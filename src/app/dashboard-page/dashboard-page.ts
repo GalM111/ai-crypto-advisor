@@ -44,37 +44,37 @@ export class DashboardPage {
   ) { }
 
   async ngOnInit() {
-    if (this.authService.isLoggedIn) {
-      this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
-      this.sub = this.socketService.prices$().subscribe({
-        next: (data: any) => {
-          this.ngZone.run(() => {
-            this.prices = Object.entries(data).map(([id, value]: any) => ({
-              id,
-              usd: value.usd,
-              usdChange: value.usd_24h_change,
-            }));
-            console.log('Prices updated', this.prices);
-            this.pricesLoading = false;
-
-            this.cdr.markForCheck();
-          });
-        },
-        error: (err) => {
-          console.error('prices$ error', err);
-          this.ngZone.run(() => {
-            this.pricesLoading = false;
-            this.cdr.markForCheck();
-          });
-        },
-      });
-
-      this.loadDashboardData();
-    }
-    else {
+    if (await localStorage.getItem('currentUserData') === null) {
       this.router.navigate(['']);
     }
+    this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
+    this.sub = this.socketService.prices$().subscribe({
+      next: (data: any) => {
+        this.ngZone.run(() => {
+          this.prices = Object.entries(data).map(([id, value]: any) => ({
+            id,
+            usd: value.usd,
+            usdChange: value.usd_24h_change,
+          }));
+          console.log('Prices updated', this.prices);
+          this.pricesLoading = false;
+
+          this.cdr.markForCheck();
+        });
+      },
+      error: (err) => {
+        console.error('prices$ error', err);
+        this.ngZone.run(() => {
+          this.pricesLoading = false;
+          this.cdr.markForCheck();
+        });
+      },
+    });
+
+    this.loadDashboardData();
   }
+
+
 
   public refreshDashboard(): void {
     this.loadDashboardData();
