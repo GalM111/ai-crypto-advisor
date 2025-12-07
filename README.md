@@ -88,3 +88,7 @@ Tests live under the same folders as their subjects (e.g., `dashboard-page.spec.
 - Set the production endpoints in `src/environments/environment.ts` (or add another environment file + Angular configuration).
 - Run `npm run build` and deploy the contents of `dist/ai-crypto-advisor/`.
 - Ensure the underlying auth, user-manager, dashboard, and websocket services are reachable over HTTPS and support the origins you deploy from.
+
+## Vercel Hosting
+- The project includes a `vercel.json` that tells Vercel to run `npm run build`, serve the contents of `dist/ai-crypto-advisor/browser`, and rewrite any non-file route (e.g., `/dashboards`, `/onboarding`) back to `index.html`.
+- After pushing to Vercel, no further dashboard settings are required; the SPA fallback keeps Angular Router in control of client-side navigation.
