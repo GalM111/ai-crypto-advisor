@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserManagerService } from '../../../services/user-manager.service';
+import { UserData } from '../../../models/user-data';
 @Component({
   selector: 'app-live-prices',
   imports: [CommonModule],
@@ -13,12 +15,25 @@ export class LivePrices {
   private likedCoins = new Set<string>();
   private dislikedCoins = new Set<string>();
 
+  constructor(private userManagerService: UserManagerService,
+  ) { }
+
   toggleLike(coinId: string): void {
     if (this.likedCoins.has(coinId)) {
       this.likedCoins.delete(coinId);
     } else {
       this.likedCoins.add(coinId);
       this.dislikedCoins.delete(coinId);
+      this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { likedContent: coinId }).subscribe({
+        next: (res) => {
+          console.log('updated:', res)
+          localStorage.setItem('currentUserData', JSON.stringify(res));
+          this.userManagerService.currentUserData = res as UserData;
+          console.log(res);
+
+        },
+        error: (err) => { console.error('Create failed:', err) }
+      });
     }
   }
 
@@ -32,8 +47,19 @@ export class LivePrices {
     } else {
       this.dislikedCoins.add(coinId);
       this.likedCoins.delete(coinId);
+      this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { dislikedContent: coinId }).subscribe({
+        next: (res) => {
+          console.log('updated:', res)
+          localStorage.setItem('currentUserData', JSON.stringify(res));
+          this.userManagerService.currentUserData = res as UserData;
+          console.log(res);
+
+        },
+        error: (err) => { console.error('Create failed:', err) }
+      });
     }
   }
+
 
   isDisliked(coinId: string): boolean {
     return this.dislikedCoins.has(coinId);

@@ -9,4 +9,6 @@ export interface UserData {
   investorType?: string | null;
   contentType: string[];
   createdAt?: string;
+  likedContent?: string,
+  dislikedContent?: string;
 }

@@ -4,4 +4,6 @@ export interface UpdateUserDataDto {
   assets?: string[];
   investorType?: string | null;
   contentType?: string[];
+  likedContent?: string,
+  dislikedContent?: string;
 }

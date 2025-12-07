@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { NewsPost } from '../../../models/news.interface';
 import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
+import { UserManagerService } from '../../../services/user-manager.service';
+import { UserData } from '../../../models/user-data';
 
 
 @Component({
@@ -15,6 +17,9 @@ export class NewsFeed {
   private likedPosts = new Set<string>();
   private dislikedPosts = new Set<string>();
 
+  constructor(private userManagerService: UserManagerService,
+  ) { }
+
   toggleLike(post: NewsPost): void {
     const key = this.getPostKey(post);
     if (this.likedPosts.has(key)) {
@@ -22,6 +27,16 @@ export class NewsFeed {
     } else {
       this.likedPosts.add(key);
       this.dislikedPosts.delete(key);
+      this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { likedContent: JSON.stringify(post) }).subscribe({
+        next: (res) => {
+          console.log('updated:', res)
+          localStorage.setItem('currentUserData', JSON.stringify(res));
+          this.userManagerService.currentUserData = res as UserData;
+          console.log(res);
+
+        },
+        error: (err) => { console.error('Create failed:', err) }
+      });
     }
   }
 
@@ -36,6 +51,17 @@ export class NewsFeed {
     } else {
       this.dislikedPosts.add(key);
       this.likedPosts.delete(key);
+      this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { dislikedContent: JSON.stringify(post) }).subscribe({
+        next: (res) => {
+          console.log('updated:', res)
+          localStorage.setItem('currentUserData', JSON.stringify(res));
+          this.userManagerService.currentUserData = res as UserData;
+          console.log(res);
+
+        },
+        error: (err) => { console.error('Create failed:', err) }
+      });
+
     }
   }
 
