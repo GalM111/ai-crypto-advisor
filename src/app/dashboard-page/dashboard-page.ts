@@ -27,6 +27,7 @@ export class DashboardPage {
   public pricesLoading = true;
   public aiInsights: any;
   public memeUrl: any;
+  public memeError = false;
 
   prices: CryptoRow[] = [];
   private sub?: Subscription;
@@ -121,6 +122,8 @@ export class DashboardPage {
   }
 
   private fetchMeme(): void {
+    this.memeError = false;
+    this.memeUrl = '';
     this.memeService
       .getMemeAi(this.userManagerService.currentUserData)
       .subscribe({
@@ -131,7 +134,13 @@ export class DashboardPage {
             this.cdr.markForCheck();
           });
         },
-        error: (err) => console.error('Failed to get meme', err),
+        error: (err) => {
+          console.error('Failed to get meme', err);
+          this.ngZone.run(() => {
+            this.memeError = true;
+            this.cdr.markForCheck();
+          });
+        },
       });
   }
 

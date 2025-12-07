@@ -1,11 +1,13 @@
 <div class="meme-widget">
   <header class="widget-header">
-    <h3>Funny AI Insight gif On Todays Market</h3>
+    <h3>Funny AI Insight GIF On Todays Market</h3>
   </header>
 
   <div class="meme-frame">
-    <ng-container *ngIf="memeUrl; else loadingState">
-      <img [src]="memeUrl" alt="AI-selected market mood GIF" class="the-gif" />
+    <ng-container *ngIf="!hasError; else errorState">
+      <ng-container *ngIf="memeUrl; else loadingState">
+        <img [src]="memeUrl" alt="AI-selected market mood GIF" class="the-gif" />
+      </ng-container>
     </ng-container>
 
     <ng-template #loadingState>
@@ -13,9 +15,19 @@
         <span>Searching The Right One...</span>
       </div>
     </ng-template>
+
+    <ng-template #errorState>
+      <div class="error-placeholder" role="alert" aria-live="assertive">
+        <div class="error-icon" aria-hidden="true">!</div>
+        <div class="error-text">
+          <strong>Couldn’t load a meme.</strong>
+          <span>Please try refreshing the dashboard.</span>
+        </div>
+      </div>
+    </ng-template>
   </div>
 
-  <div class="meme-actions">
+  <div class="meme-actions" *ngIf="!hasError">
     <button type="button" class="meme-like" [class.liked]="liked" (click)="toggleLike()">
       {{ liked ? 'Unlike' : 'Like' }}
     </button>

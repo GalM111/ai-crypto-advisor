@@ -79,6 +79,49 @@ $meme-accent: linear-gradient(45deg, #ff00cc, #333399);
       font-family: monospace;
       animation: pulse 1.5s infinite alternate;
     }
+
+    .error-placeholder {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ffcdd2;
+      text-align: left;
+      padding: 1rem;
+      background-color: rgba(229, 57, 53, 0.15);
+      border-radius: 10px;
+      border: 1px solid rgba(229, 57, 53, 0.4);
+
+      .error-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 2px solid rgba(229, 57, 53, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: #ffebee;
+        background-color: rgba(229, 57, 53, 0.4);
+      }
+
+      .error-text {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        line-height: 1.4;
+
+        strong {
+          color: #ffebee;
+          margin-bottom: 0.1rem;
+        }
+
+        span {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 0.85rem;
+        }
+      }
+    }
   }
 
   .meme-actions {

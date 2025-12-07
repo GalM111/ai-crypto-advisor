@@ -10,6 +10,7 @@ import { UserData } from '../../../models/user-data';
 })
 export class MemeGif {
   @Input() memeUrl: string = '';
+  @Input() hasError = false;
   liked = false;
   disliked = false;
 
