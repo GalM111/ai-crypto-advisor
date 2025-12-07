@@ -9,16 +9,31 @@ import { CommonModule } from '@angular/common';
 export class LivePrices {
   @Input() prices: any = [];
   private likedCoins = new Set<string>();
+  private dislikedCoins = new Set<string>();
 
   toggleLike(coinId: string): void {
     if (this.likedCoins.has(coinId)) {
       this.likedCoins.delete(coinId);
     } else {
       this.likedCoins.add(coinId);
+      this.dislikedCoins.delete(coinId);
     }
   }
 
   isLiked(coinId: string): boolean {
     return this.likedCoins.has(coinId);
+  }
+
+  toggleDislike(coinId: string): void {
+    if (this.dislikedCoins.has(coinId)) {
+      this.dislikedCoins.delete(coinId);
+    } else {
+      this.dislikedCoins.add(coinId);
+      this.likedCoins.delete(coinId);
+    }
+  }
+
+  isDisliked(coinId: string): boolean {
+    return this.dislikedCoins.has(coinId);
   }
 }

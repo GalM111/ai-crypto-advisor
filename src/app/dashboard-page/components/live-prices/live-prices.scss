@@ -7,6 +7,7 @@ $card-bg: #ffffff;
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 $green-trend: #4caf50; // Success color
 $red-trend: #f44336; // Danger color
+$dislike-color: #e53935;
 
 :host {
   display: block;
@@ -144,9 +145,15 @@ $red-trend: #f44336; // Danger color
       }
     }
 
-    .coin-like {
+    .coin-feedback {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .coin-like,
+    .coin-dislike {
       align-self: flex-start;
-      border: 1px solid lighten($text-muted, 20%);
       border-radius: 999px;
       padding: 0.3rem 0.9rem;
       background: #fff;
@@ -158,15 +165,28 @@ $red-trend: #f44336; // Danger color
       gap: 0.4rem;
       align-items: center;
       transition: all 0.2s ease;
+      border: 1px solid lighten($text-muted, 20%);
 
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .coin-like {
       &.liked {
         border-color: $primary-color;
         color: $primary-color;
         background: rgba($primary-color, 0.1);
       }
+    }
 
-      &:hover {
-        transform: translateY(-1px);
+    .coin-dislike {
+      border-color: rgba($dislike-color, 0.3);
+      color: $dislike-color;
+
+      &.disliked {
+        border-color: $dislike-color;
+        background: rgba($dislike-color, 0.1);
       }
     }
   }

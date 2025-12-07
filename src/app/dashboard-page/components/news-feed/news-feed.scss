@@ -6,6 +6,7 @@ $bg-color: #f4f6f8;
 $card-bg: #ffffff;
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 $shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+$dislike-color: #e53935;
 
 :host {
   display: block;
@@ -119,8 +120,14 @@ $shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
 
-    .like-button {
+    .feedback-actions {
       margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .feedback-button {
       border: 1px solid lighten($text-muted, 20%);
       border-radius: 999px;
       padding: 0.35rem 0.85rem;
@@ -133,14 +140,27 @@ $shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
       cursor: pointer;
       transition: all 0.2s ease;
 
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .feedback-button.like-button {
       &.liked {
         background: rgba($primary-color, 0.1);
         border-color: $primary-color;
         color: $primary-color;
       }
+    }
 
-      &:hover {
-        transform: translateY(-1px);
+    .feedback-button.dislike-button {
+      border-color: rgba($dislike-color, 0.3);
+      color: $dislike-color;
+
+      &.disliked {
+        background: rgba($dislike-color, 0.1);
+        border-color: $dislike-color;
+        color: $dislike-color;
       }
     }
   }

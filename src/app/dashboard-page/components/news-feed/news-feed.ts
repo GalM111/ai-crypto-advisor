@@ -13,6 +13,7 @@ export class NewsFeed {
   @Input() newsArr: NewsPost[] = [];
   @Input() loading = true;
   private likedPosts = new Set<string>();
+  private dislikedPosts = new Set<string>();
 
   toggleLike(post: NewsPost): void {
     const key = this.getPostKey(post);
@@ -20,11 +21,26 @@ export class NewsFeed {
       this.likedPosts.delete(key);
     } else {
       this.likedPosts.add(key);
+      this.dislikedPosts.delete(key);
     }
   }
 
   isLiked(post: NewsPost): boolean {
     return this.likedPosts.has(this.getPostKey(post));
+  }
+
+  toggleDislike(post: NewsPost): void {
+    const key = this.getPostKey(post);
+    if (this.dislikedPosts.has(key)) {
+      this.dislikedPosts.delete(key);
+    } else {
+      this.dislikedPosts.add(key);
+      this.likedPosts.delete(key);
+    }
+  }
+
+  isDisliked(post: NewsPost): boolean {
+    return this.dislikedPosts.has(this.getPostKey(post));
   }
 
   private getPostKey(post: NewsPost): string {

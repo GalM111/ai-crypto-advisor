@@ -28,14 +28,25 @@
         </div>
       </div>
 
-      <button
-        type="button"
-        class="coin-like"
-        [class.liked]="isLiked(coin.id)"
-        (click)="toggleLike(coin.id)"
-      >
-        {{ isLiked(coin.id) ? 'Unlike' : 'Like' }}
-      </button>
+      <div class="coin-feedback">
+        <button
+          type="button"
+          class="coin-like"
+          [class.liked]="isLiked(coin.id)"
+          (click)="toggleLike(coin.id)"
+        >
+          {{ isLiked(coin.id) ? 'Unlike' : 'Like' }}
+        </button>
+
+        <button
+          type="button"
+          class="coin-dislike"
+          [class.disliked]="isDisliked(coin.id)"
+          (click)="toggleDislike(coin.id)"
+        >
+          {{ isDisliked(coin.id) ? 'Undo Dislike' : 'Dislike' }}
+        </button>
+      </div>
 
     </div>
   </div>

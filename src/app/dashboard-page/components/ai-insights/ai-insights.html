@@ -19,14 +19,24 @@
 
     <div class="footer">
       <small>Generated at {{ now | date:'shortTime' }}</small>
-      <button
-        type="button"
-        class="like-button"
-        [class.liked]="liked"
-        (click)="toggleLike()"
-      >
-        {{ liked ? 'Unlike' : 'Like' }}
-      </button>
+      <div class="feedback-actions">
+        <button
+          type="button"
+          class="feedback-button like-button"
+          [class.liked]="liked"
+          (click)="toggleLike()"
+        >
+          {{ liked ? 'Unlike' : 'Like' }}
+        </button>
+        <button
+          type="button"
+          class="feedback-button dislike-button"
+          [class.disliked]="disliked"
+          (click)="toggleDislike()"
+        >
+          {{ disliked ? 'Undo Dislike' : 'Dislike' }}
+        </button>
+      </div>
     </div>
   </div>
 

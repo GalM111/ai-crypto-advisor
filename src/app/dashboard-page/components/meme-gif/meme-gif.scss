@@ -81,10 +81,16 @@ $meme-accent: linear-gradient(45deg, #ff00cc, #333399);
     }
   }
 
-  .meme-like {
+  .meme-actions {
     margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meme-like,
+  .meme-dislike {
     align-self: flex-start;
-    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
     padding: 0.4rem 1rem;
     background: #fff;
@@ -92,15 +98,30 @@ $meme-accent: linear-gradient(45deg, #ff00cc, #333399);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .meme-like {
+    border-color: rgba(255, 0, 204, 0.3);
 
     &.liked {
       background: rgba(255, 0, 204, 0.12);
       border-color: #ff00cc;
       color: #ff00cc;
     }
+  }
 
-    &:hover {
-      transform: translateY(-1px);
+  .meme-dislike {
+    border-color: rgba(229, 57, 53, 0.3);
+
+    &.disliked {
+      background: rgba(229, 57, 53, 0.12);
+      border-color: #e53935;
+      color: #e53935;
     }
   }
 }

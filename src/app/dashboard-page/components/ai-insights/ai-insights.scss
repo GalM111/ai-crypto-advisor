@@ -4,6 +4,7 @@ $card-bg: #ffffff;
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 $text-dark: #333;
 $text-muted: #777;
+$dislike-color: #e53935;
 
 // AI Specific Variables
 $ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -112,18 +113,33 @@ $ai-color-primary: #667eea;
         font-style: italic;
       }
 
-      .like-button {
-        border: 1px solid rgba($ai-color-primary, 0.3);
+      .feedback-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .feedback-button {
         border-radius: 999px;
         padding: 0.35rem 1rem;
         background: #fff;
-        color: $ai-color-primary;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
+        border: 1px solid rgba($ai-color-primary, 0.3);
+        color: $ai-color-primary;
 
         &.liked {
           background: rgba($ai-color-primary, 0.15);
+        }
+
+        &.dislike-button {
+          border-color: rgba($dislike-color, 0.3);
+          color: $dislike-color;
+
+          &.disliked {
+            background: rgba($dislike-color, 0.15);
+          }
         }
 
         &:hover {
