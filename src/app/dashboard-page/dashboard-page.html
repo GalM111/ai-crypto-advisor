@@ -14,7 +14,7 @@
     <button type="button" class="refresh-button" (click)="refreshDashboard()">
       Refresh Data
     </button>
-    <button type="button" class="refresh-button" (click)="logout()">
+    <button type="button" class="logout-button" (click)="logout()">
       logout
     </button>
   </header>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="dashboard-item">
-      <app-live-prices [prices]="prices">
+      <app-live-prices [prices]="prices" [loading]="pricesLoading">
       </app-live-prices>
     </div>
 

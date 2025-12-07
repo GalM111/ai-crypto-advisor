@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 export class DashboardPage {
   public news: NewsPost[] = [];
   public newsLoading = true;
+  public pricesLoading = true;
   public aiInsights: any;
   public memeUrl: any;
 
@@ -60,11 +61,18 @@ export class DashboardPage {
               usdChange: value.usd_24h_change,
             }));
             console.log('Prices updated', this.prices);
+            this.pricesLoading = false;
 
             this.cdr.markForCheck();   // 👈 force view update if using OnPush / external events
           });
         },
-        error: (err) => console.error('prices$ error', err),
+        error: (err) => {
+          console.error('prices$ error', err);
+          this.ngZone.run(() => {
+            this.pricesLoading = false;
+            this.cdr.markForCheck();
+          });
+        },
       });
 
       this.loadDashboardData();

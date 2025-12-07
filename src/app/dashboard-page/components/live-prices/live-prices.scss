@@ -190,6 +190,79 @@ $dislike-color: #e53935;
       }
     }
   }
+
+  .state-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: $text-muted;
+
+    &.empty {
+      color: $text-dark;
+      font-weight: 500;
+    }
+
+    .state-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $primary-color;
+      animation: pulse 1.5s infinite;
+    }
+  }
+
+  .skeleton-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .skeleton-card {
+    background-color: $card-bg;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: $shadow-sm;
+  }
+
+  .skeleton {
+    height: 12px;
+    background: rgba($primary-color, 0.12);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    &.skeleton-title {
+      width: 60%;
+    }
+
+    &.skeleton-subtitle {
+      width: 40%;
+    }
+
+    &.skeleton-price {
+      width: 30%;
+      margin-bottom: 0;
+    }
+  }
 }
 
 // Animation for the "Live" dot
@@ -204,5 +277,11 @@ $dislike-color: #e53935;
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(200%);
   }
 }

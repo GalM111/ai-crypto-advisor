@@ -70,6 +70,27 @@ $glass-effect: rgba(255, 255, 255, 0.03);
         transform: translateY(0);
       }
     }
+
+    .logout-button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      background: linear-gradient(90deg, $neon-blue, $neon-purple);
+      color: $text-main;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 20px rgba(252, 18, 18, 0.35);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(133, 0, 0, 0.35);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
   }
 
   .dashboard-grid {

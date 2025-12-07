@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 })
 export class LivePrices {
   @Input() prices: any = [];
+  @Input() loading = true;
+  readonly placeholderRows = Array.from({ length: 3 });
   private likedCoins = new Set<string>();
   private dislikedCoins = new Set<string>();
 

@@ -4,50 +4,71 @@
     <span class="refresh-icon">Live</span>
   </header>
 
-  <div class="crypto-list">
-    <div class="crypto-card" *ngFor="let coin of prices">
+  <ng-container *ngIf="prices?.length; else priceStates">
+    <div class="crypto-list">
+      <div class="crypto-card" *ngFor="let coin of prices">
 
-      <div class="coin-headline">
-        <div class="coin-info">
-          <span class="coin-name">{{ coin.id | titlecase }}</span>
-          <span class="coin-code">{{ coin.id | uppercase | slice:0:3 }}</span>
-        </div>
-
-        <div class="coin-stats">
-          <div class="price">
-            {{ coin.usd | currency:'USD':'symbol':'1.2-2' }}
+        <div class="coin-headline">
+          <div class="coin-info">
+            <span class="coin-name">{{ coin.id | titlecase }}</span>
+            <span class="coin-code">{{ coin.id | uppercase | slice:0:3 }}</span>
           </div>
 
-          <div class="change" [ngClass]="{'positive': coin.usdChange >= 0, 'negative': coin.usdChange < 0}">
+          <div class="coin-stats">
+            <div class="price">
+              {{ coin.usd | currency:'USD':'symbol':'1.2-2' }}
+            </div>
 
-            <span *ngIf="coin.usdChange >= 0">&uarr;</span>
-            <span *ngIf="coin.usdChange < 0">&darr;</span>
+            <div class="change" [ngClass]="{'positive': coin.usdChange >= 0, 'negative': coin.usdChange < 0}">
 
-            {{ coin.usdChange / 100 | percent:'1.2-2' }}
+              <span *ngIf="coin.usdChange >= 0">&uarr;</span>
+              <span *ngIf="coin.usdChange < 0">&darr;</span>
+
+              {{ coin.usdChange / 100 | percent:'1.2-2' }}
+            </div>
           </div>
+
         </div>
+
+        <div class="coin-feedback">
+          <button
+            type="button"
+            class="coin-like"
+            [class.liked]="isLiked(coin.id)"
+            (click)="toggleLike(coin.id)"
+          >
+            {{ isLiked(coin.id) ? 'Unlike' : 'Like' }}
+          </button>
+
+          <button
+            type="button"
+            class="coin-dislike"
+            [class.disliked]="isDisliked(coin.id)"
+            (click)="toggleDislike(coin.id)"
+          >
+            {{ isDisliked(coin.id) ? 'Undo Dislike' : 'Dislike' }}
+          </button>
+        </div>
+
       </div>
-
-      <div class="coin-feedback">
-        <button
-          type="button"
-          class="coin-like"
-          [class.liked]="isLiked(coin.id)"
-          (click)="toggleLike(coin.id)"
-        >
-          {{ isLiked(coin.id) ? 'Unlike' : 'Like' }}
-        </button>
-
-        <button
-          type="button"
-          class="coin-dislike"
-          [class.disliked]="isDisliked(coin.id)"
-          (click)="toggleDislike(coin.id)"
-        >
-          {{ isDisliked(coin.id) ? 'Undo Dislike' : 'Dislike' }}
-        </button>
-      </div>
-
     </div>
-  </div>
+  </ng-container>
+
+  <ng-template #priceStates>
+    <div class="state-container" *ngIf="loading; else emptyState">
+      <div class="skeleton-list">
+        <div class="skeleton-card" *ngFor="let _ of placeholderRows">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-subtitle"></div>
+          <div class="skeleton skeleton-price"></div>
+        </div>
+      </div>
+      <span class="state-label">Loading live prices...</span>
+    </div>
+    <ng-template #emptyState>
+      <div class="state-container empty">
+        <p>No live price data available yet.</p>
+      </div>
+    </ng-template>
+  </ng-template>
 </div>
