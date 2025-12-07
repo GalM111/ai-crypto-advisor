@@ -3,12 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Auth as AuthService } from '../services/auth';
-import { environment } from '../../environments/environment';
 import { UserManagerService } from '../services/user-manager.service';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { finalize, switchMap } from 'rxjs';
 
 
 @Component({
@@ -26,17 +26,23 @@ export class WelcomePage {
 
   constructor(private authService: AuthService, private userManagerService: UserManagerService, private router: Router) { }
   public login(): void {
-    this.authService.login(this.email, this.password).subscribe({
-      next: async (user) => {
-        console.log('Login successful:', user);
-        this.userManagerService.getUserDataByEmail(this.email);
-        this.router.navigate(['/dashboards']);
-
-      },
-      error: (error) => {
-        console.error('Login failed:', error);
-      }
-    });
+    if (!this.email || !this.password) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService.login(this.email, this.password)
+      .pipe(
+        switchMap(() => this.userManagerService.getUserDataByEmail(this.email)),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboards']);
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+        }
+      });
   }
 
   public goToRegister() {

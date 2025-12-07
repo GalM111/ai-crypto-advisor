@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { UpdateUserDataDto } from '../models/updateUserData.interface';
 import { UserData } from '../models/user-data';
 
@@ -28,19 +29,14 @@ export class UserManagerService {
   }
 
 
-  public getUserDataByEmail(email: string) {
-
+  public getUserDataByEmail(email: string): Observable<UserData> {
     const params = new HttpParams().set('email', email.trim());
-    this.http.get<any>(`${this.API_URL}/userdata/email`, { params }).subscribe({
-      next: (res) => {
+    return this.http.get<UserData>(`${this.API_URL}/userdata/email`, { params }).pipe(
+      tap((res) => {
+        this.currentUserData = res;
         localStorage.setItem('currentUserData', JSON.stringify(res));
-        console.log(res);
-
-      },
-      error: (err) => {
-        console.error('Error loading user:', err);
-      }
-    });
+      })
+    );
   }
 
   public createUserData(body: any): Observable<any> {

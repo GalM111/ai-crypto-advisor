@@ -89,6 +89,20 @@ $ai-color-primary: #667eea;
     justify-content: space-between;
     overflow-y: auto;
     position: relative;
+    padding-right: 0.5rem;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
 
     .insight-text {
       font-size: 0.95rem;
