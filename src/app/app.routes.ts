@@ -3,6 +3,7 @@ import { WelcomePage } from './welcome-page/welcome-page';
 import { RegisterPage } from './register-page/register-page';
 import { OnboardingPage } from './onboarding-page/onboarding-page';
 import { DashboardPage } from './dashboard-page/dashboard-page';
+import { AuthGuard } from './services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -19,12 +20,18 @@ export const routes: Routes = [
   {
     path: 'onboarding',
     component: OnboardingPage,
-    title: 'onboarding Ai Crypto Advisor'
-
+    title: 'onboarding Ai Crypto Advisor',
+    canActivate: [AuthGuard]
   },
   {
     path: 'dashboards',
     component: DashboardPage,
-    title: 'Ai Crypto Advisor'
+    title: 'Ai Crypto Advisor',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
