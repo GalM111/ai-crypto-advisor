@@ -10,7 +10,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class Auth {
-  // private readonly API_URL = 'https://your-auth-server.com/api';
   private readonly API_URL = environment.authServiceUrl;
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
@@ -35,7 +34,7 @@ export class Auth {
     return this.currentUserValue?.refreshToken;
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  public register(username: string, email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/register`, { username, email, password })
       .pipe(
         map(response => {
@@ -47,11 +46,10 @@ export class Auth {
       );
   }
 
-  login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/login`, { email, password })
       .pipe(
         map(user => {
-          // store user details and tokens in local storage
           this.isLoggedIn = true;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -63,7 +61,7 @@ export class Auth {
       );
   }
 
-  refreshAccessToken(): Observable<any> {
+  public refreshAccessToken(): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/refresh-token`, {
       refreshToken: this.refreshToken
     }).pipe(
@@ -79,8 +77,7 @@ export class Auth {
     );
   }
 
-  logout() {
-    // remove user from local storage and set current user to null
+  public logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('currentUserData');
     this.currentUserSubject.next(null);
@@ -88,7 +85,7 @@ export class Auth {
 
 
 
-  isTokenExpired(token?: string): boolean {
+  public isTokenExpired(token?: string): boolean {
     if (!token) token = this.accessToken;
     if (!token) return true;
 

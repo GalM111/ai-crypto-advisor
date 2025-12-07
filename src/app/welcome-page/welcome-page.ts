@@ -19,20 +19,13 @@ import { CommonModule } from '@angular/common';
 })
 export class WelcomePage {
 
-  email = '';
-  password = '';
-  hidePassword = true;
-  isLoading = false
+  public email = '';
+  public password = '';
+  public hidePassword = true;
+  public isLoading = false
 
   constructor(private authService: AuthService, private userManagerService: UserManagerService, private router: Router) { }
   public login(): void {
-    console.log(environment.dashboardUrl);
-
-    console.log('Login button clicked');
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    console.log(this.authService.currentUser)
-
     this.authService.login(this.email, this.password).subscribe({
       next: async (user) => {
         console.log('Login successful:', user);
@@ -42,15 +35,11 @@ export class WelcomePage {
       },
       error: (error) => {
         console.error('Login failed:', error);
-        // Handle login error (e.g., show error message)
       }
     });
   }
 
-  goToRegister() {
+  public goToRegister() {
     this.router.navigate(['/register']);
   }
-
-
-
 }

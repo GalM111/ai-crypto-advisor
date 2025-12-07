@@ -24,9 +24,8 @@ export class RegisterPage {
   public name: string = '';
   public email: string = '';
   public password: string = '';
-
-  hidePassword = true;
-  isLoading = false;
+  public hidePassword = true;
+  public isLoading = false;
 
 
 

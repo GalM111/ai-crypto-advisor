@@ -18,21 +18,13 @@
       </p>
 
       <div class="feedback-actions">
-        <button
-          type="button"
-          class="feedback-button like-button"
-          [class.liked]="isLiked(post)"
-          (click)="toggleLike(post)"
-        >
+        <button type="button" class="feedback-button like-button" [class.liked]="isLiked(post)"
+          (click)="toggleLike(post)">
           {{ isLiked(post) ? 'Unlike' : 'Like' }}
         </button>
 
-        <button
-          type="button"
-          class="feedback-button dislike-button"
-          [class.disliked]="isDisliked(post)"
-          (click)="toggleDislike(post)"
-        >
+        <button type="button" class="feedback-button dislike-button" [class.disliked]="isDisliked(post)"
+          (click)="toggleDislike(post)">
           {{ isDisliked(post) ? 'Undo Dislike' : 'Dislike' }}
         </button>
       </div>

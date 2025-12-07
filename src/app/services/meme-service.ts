@@ -11,20 +11,10 @@ export class MemeService {
   constructor(private http: HttpClient) { }
 
   public getMeme(title: string): Observable<any[]> {
-    console.log(title);
-
     return this.http.post<any[]>(`${environment.dashboardUrl}/meme`, { params: { title } });
   }
   public getMemeAi(userData: UserData): Observable<any[]> {
-    // console.log(title);
     return this.http.post<any[]>(`${environment.dashboardUrl}/memeAI`, { params: { userData } });
   }
 
-  // getMeme(title?: string) {
-  //   let params = new HttpParams();
-  //   if (title) {
-  //     params = params.set('title', title); // requires controller to read req.query.title
-  //   }
-  //   return this.http.get<any>(`${environment.dashboardUrl}/meme`, { params });
-  // }
 }

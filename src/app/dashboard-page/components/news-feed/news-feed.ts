@@ -20,7 +20,7 @@ export class NewsFeed {
   constructor(private userManagerService: UserManagerService,
   ) { }
 
-  toggleLike(post: NewsPost): void {
+  public toggleLike(post: NewsPost): void {
     const key = this.getPostKey(post);
     if (this.likedPosts.has(key)) {
       this.likedPosts.delete(key);
@@ -40,11 +40,11 @@ export class NewsFeed {
     }
   }
 
-  isLiked(post: NewsPost): boolean {
+  public isLiked(post: NewsPost): boolean {
     return this.likedPosts.has(this.getPostKey(post));
   }
 
-  toggleDislike(post: NewsPost): void {
+  public toggleDislike(post: NewsPost): void {
     const key = this.getPostKey(post);
     if (this.dislikedPosts.has(key)) {
       this.dislikedPosts.delete(key);
@@ -65,7 +65,7 @@ export class NewsFeed {
     }
   }
 
-  isDisliked(post: NewsPost): boolean {
+  public isDisliked(post: NewsPost): boolean {
     return this.dislikedPosts.has(this.getPostKey(post));
   }
 

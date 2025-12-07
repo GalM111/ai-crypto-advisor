@@ -41,24 +41,7 @@ export class UserManagerService {
         console.error('Error loading user:', err);
       }
     });
-    // return
   }
-
-  // public postNewUserData(id: string) {
-
-  //   // const params = new HttpParams().set('email', email.trim());
-  //   this.http.post<any>(`${this.API_URL}/userdata`, { params }).subscribe({
-  //     next: (res) => {
-  //       localStorage.setItem('currentUserData', JSON.stringify(res));
-  //       console.log(res);
-
-  //     },
-  //     error: (err) => {
-  //       console.error('Error loading user:', err);
-  //     }
-  //   });
-  //   // return
-  // }
 
   public createUserData(body: any): Observable<any> {
     return this.http.post(`${this.API_URL}/userdata`, body);

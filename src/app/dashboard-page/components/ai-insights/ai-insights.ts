@@ -16,8 +16,7 @@ export class AiInsights {
   public liked: boolean = false;
   public disliked: boolean = false;
 
-  constructor(private userManagerService: UserManagerService,
-  ) { }
+  constructor(private userManagerService: UserManagerService) { }
 
   public toggleLike(): void {
     this.liked = !this.liked;
@@ -25,11 +24,8 @@ export class AiInsights {
       this.disliked = false;
       this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { likedContent: this.aiInsights }).subscribe({
         next: (res) => {
-          console.log('updated:', res)
           localStorage.setItem('currentUserData', JSON.stringify(res));
           this.userManagerService.currentUserData = res as UserData;
-          console.log(res);
-
         },
         error: (err) => { console.error('Create failed:', err) }
       });
@@ -44,11 +40,8 @@ export class AiInsights {
     }
     this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, { dislikedContent: this.aiInsights }).subscribe({
       next: (res) => {
-        console.log('updated:', res)
         localStorage.setItem('currentUserData', JSON.stringify(res));
         this.userManagerService.currentUserData = res as UserData;
-        console.log(res);
-
       },
       error: (err) => { console.error('Create failed:', err) }
     });

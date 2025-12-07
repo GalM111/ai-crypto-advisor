@@ -20,20 +20,11 @@
     <div class="footer">
       <small>Generated at {{ now | date:'shortTime' }}</small>
       <div class="feedback-actions">
-        <button
-          type="button"
-          class="feedback-button like-button"
-          [class.liked]="liked"
-          (click)="toggleLike()"
-        >
+        <button type="button" class="feedback-button like-button" [class.liked]="liked" (click)="toggleLike()">
           {{ liked ? 'Unlike' : 'Like' }}
         </button>
-        <button
-          type="button"
-          class="feedback-button dislike-button"
-          [class.disliked]="disliked"
-          (click)="toggleDislike()"
-        >
+        <button type="button" class="feedback-button dislike-button" [class.disliked]="disliked"
+          (click)="toggleDislike()">
           {{ disliked ? 'Undo Dislike' : 'Dislike' }}
         </button>
       </div>

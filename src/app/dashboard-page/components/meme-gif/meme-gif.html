@@ -1,6 +1,6 @@
 <div class="meme-widget">
   <header class="widget-header">
-    <h3>👾 Market Vibe Check</h3>
+    <h3>Funny AI Insight gif On Todays Market</h3>
   </header>
 
   <div class="meme-frame">
@@ -10,26 +10,16 @@
 
     <ng-template #loadingState>
       <div class="loading-placeholder">
-        <span>Loading the vibes...</span>
+        <span>Searching The Right One...</span>
       </div>
     </ng-template>
   </div>
 
   <div class="meme-actions">
-    <button
-      type="button"
-      class="meme-like"
-      [class.liked]="liked"
-      (click)="toggleLike()"
-    >
+    <button type="button" class="meme-like" [class.liked]="liked" (click)="toggleLike()">
       {{ liked ? 'Unlike' : 'Like' }}
     </button>
-    <button
-      type="button"
-      class="meme-dislike"
-      [class.disliked]="disliked"
-      (click)="toggleDislike()"
-    >
+    <button type="button" class="meme-dislike" [class.disliked]="disliked" (click)="toggleDislike()">
       {{ disliked ? 'Undo Dislike' : 'Dislike' }}
     </button>
   </div>

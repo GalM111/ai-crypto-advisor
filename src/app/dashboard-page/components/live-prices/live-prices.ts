@@ -15,10 +15,9 @@ export class LivePrices {
   private likedCoins = new Set<string>();
   private dislikedCoins = new Set<string>();
 
-  constructor(private userManagerService: UserManagerService,
-  ) { }
+  constructor(private userManagerService: UserManagerService) { }
 
-  toggleLike(coinId: string): void {
+  public toggleLike(coinId: string): void {
     if (this.likedCoins.has(coinId)) {
       this.likedCoins.delete(coinId);
     } else {
@@ -37,11 +36,11 @@ export class LivePrices {
     }
   }
 
-  isLiked(coinId: string): boolean {
+  public isLiked(coinId: string): boolean {
     return this.likedCoins.has(coinId);
   }
 
-  toggleDislike(coinId: string): void {
+  public toggleDislike(coinId: string): void {
     if (this.dislikedCoins.has(coinId)) {
       this.dislikedCoins.delete(coinId);
     } else {
@@ -61,7 +60,7 @@ export class LivePrices {
   }
 
 
-  isDisliked(coinId: string): boolean {
+  public isDisliked(coinId: string): boolean {
     return this.dislikedCoins.has(coinId);
   }
 }

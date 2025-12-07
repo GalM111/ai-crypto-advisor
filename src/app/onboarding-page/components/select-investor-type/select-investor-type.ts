@@ -12,7 +12,7 @@ export class SelectInvestorType {
   @Input() selected: boolean = false;
   @Output() toggleSelect = new EventEmitter<void>();
 
-  onToggle(): void {
+  public onToggle(): void {
     this.toggleSelect.emit();
   }
 }

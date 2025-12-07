@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
-  // standalone: true,
   imports: [NewsFeed, LivePrices, AiInsights, MemeGif],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
@@ -46,14 +45,9 @@ export class DashboardPage {
 
   async ngOnInit() {
     if (this.authService.isLoggedIn) {
-      console.log(this.userManagerService.currentUserData);
-      console.log(this.userManagerService.currentUserData.assets);
-
       this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
-
       this.sub = this.socketService.prices$().subscribe({
         next: (data: any) => {
-          // ensure we are in Angular zone
           this.ngZone.run(() => {
             this.prices = Object.entries(data).map(([id, value]: any) => ({
               id,
@@ -63,7 +57,7 @@ export class DashboardPage {
             console.log('Prices updated', this.prices);
             this.pricesLoading = false;
 
-            this.cdr.markForCheck();   // 👈 force view update if using OnPush / external events
+            this.cdr.markForCheck();
           });
         },
         error: (err) => {
@@ -82,10 +76,7 @@ export class DashboardPage {
     }
   }
 
-  refreshDashboard(): void {
-    console.log(this.userManagerService.currentUserData);
-    console.log(this.authService.currentUser);
-
+  public refreshDashboard(): void {
     this.loadDashboardData();
   }
 
@@ -102,8 +93,7 @@ export class DashboardPage {
         next: (res) => {
           this.ngZone.run(() => {
             this.aiInsights = res;
-            console.log('aiInsights', this.aiInsights);
-            this.cdr.markForCheck();   // 👈 update view
+            this.cdr.markForCheck();
           });
         },
         error: (err) => console.error('Failed to get insights', err),
@@ -117,14 +107,13 @@ export class DashboardPage {
         this.ngZone.run(() => {
           this.news = res as NewsPost[];
           this.newsLoading = false;
-          console.log('news', this.news);
-          this.cdr.markForCheck();   // 👈 update view when news arrives
+          this.cdr.markForCheck();
         });
       },
       error: (err) => {
         this.ngZone.run(() => {
           this.newsLoading = false;
-          this.cdr.markForCheck();   // 👈 update view even on error
+          this.cdr.markForCheck();
         });
         console.error('Failed to get news', err);
       },
@@ -139,7 +128,7 @@ export class DashboardPage {
           this.ngZone.run(() => {
             this.memeUrl = res;
             console.log('memeUrl', this.memeUrl);
-            this.cdr.markForCheck();   // 👈 update view
+            this.cdr.markForCheck();
           });
         },
         error: (err) => console.error('Failed to get meme', err),
@@ -153,8 +142,6 @@ export class DashboardPage {
   }
 
   ngOnDestroy(): void {
-    console.log("ngOnDestroy");
-
     this.sub?.unsubscribe();
     this.authService.logout();
   }

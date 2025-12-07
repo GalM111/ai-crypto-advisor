@@ -1,22 +1,21 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
-import { MatStepperModule } from '@angular/material/stepper';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
+import { Router } from '@angular/router';
+import { ContentType as CONTENT_TYPE } from '../models/content-types';
 import { cryptoOptions as CRYPTO_OPTIONS, CryptoOption } from '../models/crypto-options';
+import { InvestorType as INVESTOR_TYPE } from '../models/investor-type';
+import { UpdateUserDataDto } from '../models/updateUserData.interface';
+import { UserData } from '../models/user-data';
+import { UserManagerService } from '../services/user-manager.service';
+import { SelectContent } from "./components/select-content/select-content";
 import { SelectCrypto } from "./components/select-crypto/select-crypto";
 import { SelectInvestorType } from "./components/select-investor-type/select-investor-type";
-import { InvestorType as INVESTOR_TYPE, InvestorType } from '../models/investor-type';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SelectContent } from "./components/select-content/select-content";
-import { ContentType as CONTENT_TYPE } from '../models/content-types';
-import { CreateUserDataDto, UserManagerService } from '../services/user-manager.service';
-import { UpdateUserDataDto } from '../models/updateUserData.interface';
-import { Router } from '@angular/router';
-import { UserData } from '../models/user-data';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -39,8 +38,6 @@ import { UserData } from '../models/user-data';
 })
 export class OnboardingPage {
 
-  // favoriteSeason: string = '';
-  // seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -64,11 +61,11 @@ export class OnboardingPage {
       investorType: [null, Validators.required],
     });
     this.thirdFormGroup = this.fb.group({
-      investorType: [null, Validators.required], //check!!
+      investorType: [null, Validators.required],
     });
   }
 
-  toggleCrypto(option: CryptoOption): void {
+  public toggleCrypto(option: CryptoOption): void {
     const index = this.selectedCryptos.indexOf(option.id);
 
     if (index !== -1) {
@@ -79,7 +76,7 @@ export class OnboardingPage {
     this.selectedCryptos.push(option.id);
   }
 
-  toggleInvestorType(type: string): void {
+  public toggleInvestorType(type: string): void {
     const nextValue = this.selectedInvestorType === type ? null : type;
     this.selectedInvestorType = nextValue;
     this.secondFormGroup.get('investorType')?.setValue(nextValue);
@@ -87,9 +84,7 @@ export class OnboardingPage {
     this.secondFormGroup.markAsTouched();
   }
 
-  toggleContentType(contentType: string): void {
-    console.log(contentType);
-
+  public toggleContentType(contentType: string): void {
     const index = this.selectedContentTypes.indexOf(contentType);
     if (index !== -1) {
       this.selectedContentTypes.splice(index, 1);
@@ -99,25 +94,15 @@ export class OnboardingPage {
     console.log(this.selectedContentTypes);
   }
   public submitNewUserData() {
-    console.log("FINISH:");
-
-    console.log(this.selectedCryptos);
-    console.log(this.selectedInvestorType);
-    console.log(this.selectedContentTypes);
     const payload: UpdateUserDataDto = {
       assets: this.selectedCryptos,
       investorType: this.selectedInvestorType,
       contentType: this.selectedContentTypes
     };
-    console.log(payload);
-    console.log(this.userManagerService.currentUserData._id);
-
     this.userManagerService.updateUserData(this.userManagerService.currentUserData._id, payload).subscribe({
       next: (res) => {
-        console.log('updated:', res)
         localStorage.setItem('currentUserData', JSON.stringify(res));
         this.userManagerService.currentUserData = res as UserData;
-        console.log(res);
 
       },
       error: (err) => { console.error('Create failed:', err) }
@@ -128,13 +113,11 @@ export class OnboardingPage {
 
   }
 
-  // Final Submission Logic
-  async finishSetup() {
+  public async finishSetup() {
 
     await this.submitNewUserData();
     this.isLoading = true;
 
-    // Simulate API call to save user preferences
     setTimeout(() => {
       console.log('User Data Submitted', {
         cryptos: this.selectedCryptos,

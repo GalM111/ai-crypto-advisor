@@ -11,12 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class SelectContent {
   @Input() name: string = '';
-  // @Input() symbol: string = '';
-  // @Input() color: string = '';
   @Input() selected: boolean = false;
   @Output() toggleSelect = new EventEmitter<void>();
 
-  onToggle(): void {
+  public onToggle(): void {
     this.toggleSelect.emit();
   }
 

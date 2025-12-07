@@ -2,27 +2,25 @@
 import { Injectable } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService {
-  public socket: Socket; //change!!!
+  public socket: Socket;
 
   constructor() {
-    this.socket = io('http://localhost:5002'); // Connect to Socket.IO server //temp!!!
+    this.socket = io(environment.webSocketServerUrl);
   }
 
-  // 🔹 client → server: send IDs
-  setCryptoIds(ids: string | string[]) {
+  public setCryptoIds(ids: string | string[]) {
     this.socket.emit('set_crypto_ids', ids);
   }
 
-  // 🔹 server → client: listen for prices
-  prices$(): Observable<any> {
+  public prices$(): Observable<any> {
     return fromEvent<any>(this.socket, 'prices');
   }
 
-  // optional: listen for errors
-  pricesError$(): Observable<any> {
+  public pricesError$(): Observable<any> {
     return fromEvent<any>(this.socket, 'prices_error');
   }
 }

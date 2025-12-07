@@ -5,7 +5,6 @@ export interface UserData {
   name: string;
   email: string;
   assets: string[];
-  // use the InvestorType enum
   investorType?: string | null;
   contentType: string[];
   createdAt?: string;

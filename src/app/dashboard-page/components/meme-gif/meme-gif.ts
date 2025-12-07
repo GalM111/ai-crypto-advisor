@@ -13,10 +13,9 @@ export class MemeGif {
   liked = false;
   disliked = false;
 
-  constructor(private userManagerService: UserManagerService,
-  ) { }
+  constructor(private userManagerService: UserManagerService) { }
 
-  toggleLike(): void {
+  public toggleLike(): void {
     this.liked = !this.liked;
     if (this.liked) {
       this.disliked = false;
@@ -33,7 +32,7 @@ export class MemeGif {
     });
   }
 
-  toggleDislike(): void {
+  public toggleDislike(): void {
     this.disliked = !this.disliked;
     if (this.disliked) {
       this.liked = false;
