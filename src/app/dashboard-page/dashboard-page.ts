@@ -44,29 +44,34 @@ export class DashboardPage {
   ) { }
 
   async ngOnInit() {
-    console.log(this.userManagerService.currentUserData);
-    console.log(this.userManagerService.currentUserData.assets);
+    if (this.authService.isLoggedIn) {
+      console.log(this.userManagerService.currentUserData);
+      console.log(this.userManagerService.currentUserData.assets);
 
-    this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
+      this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
 
-    this.sub = this.socketService.prices$().subscribe({
-      next: (data: any) => {
-        // ensure we are in Angular zone
-        this.ngZone.run(() => {
-          this.prices = Object.entries(data).map(([id, value]: any) => ({
-            id,
-            usd: value.usd,
-            usdChange: value.usd_24h_change,
-          }));
-          console.log('Prices updated', this.prices);
+      this.sub = this.socketService.prices$().subscribe({
+        next: (data: any) => {
+          // ensure we are in Angular zone
+          this.ngZone.run(() => {
+            this.prices = Object.entries(data).map(([id, value]: any) => ({
+              id,
+              usd: value.usd,
+              usdChange: value.usd_24h_change,
+            }));
+            console.log('Prices updated', this.prices);
 
-          this.cdr.markForCheck();   // 👈 force view update if using OnPush / external events
-        });
-      },
-      error: (err) => console.error('prices$ error', err),
-    });
+            this.cdr.markForCheck();   // 👈 force view update if using OnPush / external events
+          });
+        },
+        error: (err) => console.error('prices$ error', err),
+      });
 
-    this.loadDashboardData();
+      this.loadDashboardData();
+    }
+    else {
+      this.router.navigate(['']);
+    }
   }
 
   refreshDashboard(): void {

@@ -14,6 +14,7 @@ export class Auth {
   private readonly API_URL = environment.authServiceUrl;
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
+  public isLoggedIn = false;
 
   constructor(private http: HttpClient, userManagerService: UserManagerService) {
     this.currentUserSubject = new BehaviorSubject<any>(
@@ -51,6 +52,7 @@ export class Auth {
       .pipe(
         map(user => {
           // store user details and tokens in local storage
+          this.isLoggedIn = true;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;

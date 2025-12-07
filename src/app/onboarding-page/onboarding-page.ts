@@ -64,7 +64,7 @@ export class OnboardingPage {
       investorType: [null, Validators.required],
     });
     this.thirdFormGroup = this.fb.group({
-      investorType: [null, Validators.required],
+      investorType: [null, Validators.required], //check!!
     });
   }
 
