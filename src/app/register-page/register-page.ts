@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { UserData } from '../models/user-data';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-register-page',
@@ -36,50 +37,43 @@ export class RegisterPage {
       alert('Please fill in all fields');
       return;
     }
+
     this.isLoading = true;
 
-    this.auth.register(this.name, this.email, this.password).subscribe({
-      next: (response: any) => {
-        console.log('Auth registered:', response);
-        this.registerUserDataAndReRoute(response?.email || this.email, response?.username || this.name);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        alert('Registration failed: ' + (error.error?.message || error.message));
-      },
-    });
+    this.auth.register(this.name, this.email, this.password)
+      .pipe(
+        switchMap((response: any) => {
+          const email = response?.email || this.email;
+          const name = response?.username || this.name;
+          return this.registerUserData(email, name);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/onboarding']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          console.error(error);
+          alert('Registration failed: ' + (error.error?.message || error.message || 'Unknown error'));
+        }
+      });
   }
-  public registerUserDataAndReRoute(email: any, name: any) {
-    const payload = {
-      // _id: (response.data._id) as string,
-      name,
-      email,
-      assets: [],
-      investorType: null,
-      contentType: []
-    };
 
-    this.userManagerService.createUserData(payload).subscribe({
-      next: (res) => {
-        console.log('Created:', res)
+  private registerUserData(email: string, name: string) {
+    const payload = { name, email, assets: [], investorType: null, contentType: [] };
+    return this.userManagerService.createUserData(payload).pipe(
+      tap(res => {
         this.userManagerService.currentUserData = res as UserData;
         localStorage.setItem('currentUserData', JSON.stringify(this.userManagerService.currentUserData));
         this.name = '';
         this.email = '';
         this.password = '';
-        this.isLoading = false;
-        this.router.navigate(['/onboarding']);
-      },
-      error: err => {
-        this.isLoading = false;
-        console.error('Create failed:', err);
-        alert('Failed to create user profile');
-      }
-    });
-
-
-
+      })
+    );
   }
+
 
   navigateToLogin() {
     this.router.navigate(['/']);
