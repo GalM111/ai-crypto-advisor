@@ -12,6 +12,7 @@ import { UpdateUserDataDto } from '../../../models/updateUserData.interface';
 })
 export class AiInsights {
   @Input() aiInsights: string = "Loading market analysis...";
+  @Input() errorMessage = '';
   public now: Date = new Date();
   public liked: boolean = false;
   public disliked: boolean = false;

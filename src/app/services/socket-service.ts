@@ -1,6 +1,6 @@
 // socket.service.ts
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, merge, Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 
@@ -22,5 +22,19 @@ export class SocketService {
 
   public pricesError$(): Observable<any> {
     return fromEvent<any>(this.socket, 'prices_error');
+  }
+
+  public connectionErrors$(): Observable<any> {
+    return merge(
+      fromEvent<any>(this.socket, 'connect_error'),
+      fromEvent<any>(this.socket, 'error'),
+      fromEvent<any>(this.socket, 'disconnect'),
+    );
+  }
+
+  public disconnectFromSocket() {
+    if (this.socket.connected) {
+      this.socket.disconnect();
+    }
   }
 }

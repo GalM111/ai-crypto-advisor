@@ -12,7 +12,7 @@
     <span class="badge-ai">Beta</span>
   </header>
 
-  <div class="insight-content" *ngIf="aiInsights; else loading">
+  <div class="insight-content" *ngIf="aiInsights; else states">
     <div class="insight-text">
       {{ aiInsights }}
     </div>
@@ -30,6 +30,12 @@
       </div>
     </div>
   </div>
+
+  <ng-template #states>
+    <div class="error-container" *ngIf="errorMessage; else loading">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </ng-template>
 
   <ng-template #loading>
     <div class="loading-container">

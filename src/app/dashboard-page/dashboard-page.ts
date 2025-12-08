@@ -25,12 +25,14 @@ export class DashboardPage {
   public news: NewsPost[] = [];
   public newsLoading = true;
   public pricesLoading = true;
-  public aiInsights: any;
+  public pricesErrorMessage = '';
+  public aiInsights: any = '';
+  public aiInsightsError = '';
   public memeUrl: any;
   public memeError = false;
 
   prices: CryptoRow[] = [];
-  private sub?: Subscription;
+  private subs = new Subscription();
 
   constructor(
     private newsService: NewsService,
@@ -49,7 +51,7 @@ export class DashboardPage {
       this.router.navigate(['']);
     }
     this.socketService.setCryptoIds(this.userManagerService.currentUserData.assets);
-    this.sub = this.socketService.prices$().subscribe({
+    const pricesSub = this.socketService.prices$().subscribe({
       next: (data: any) => {
         this.ngZone.run(() => {
           this.prices = Object.entries(data).map(([id, value]: any) => ({
@@ -59,18 +61,31 @@ export class DashboardPage {
           }));
           console.log('Prices updated', this.prices);
           this.pricesLoading = false;
+          this.pricesErrorMessage = '';
 
           this.cdr.markForCheck();
         });
       },
       error: (err) => {
         console.error('prices$ error', err);
-        this.ngZone.run(() => {
-          this.pricesLoading = false;
-          this.cdr.markForCheck();
-        });
+        this.handlePricesError(err);
       },
     });
+    this.subs.add(pricesSub);
+
+    const pricesErrorSub = this.socketService.pricesError$().subscribe({
+      next: (err) => {
+        this.handlePricesError(err);
+      },
+    });
+    this.subs.add(pricesErrorSub);
+
+    const socketErrorSub = this.socketService.connectionErrors$().subscribe({
+      next: (err) => {
+        this.handlePricesError(err);
+      },
+    });
+    this.subs.add(socketErrorSub);
 
     this.loadDashboardData();
   }
@@ -88,16 +103,25 @@ export class DashboardPage {
   }
 
   private fetchAiInsights(): void {
+    this.aiInsights = '';
+    this.aiInsightsError = '';
     this.aiService
       .generateInsights(this.userManagerService.currentUserData)
       .subscribe({
         next: (res) => {
           this.ngZone.run(() => {
             this.aiInsights = res;
+            this.aiInsightsError = '';
             this.cdr.markForCheck();
           });
         },
-        error: (err) => console.error('Failed to get insights', err),
+        error: (err) => {
+          console.error('Failed to get insights', err);
+          this.ngZone.run(() => {
+            this.aiInsightsError = 'Unable to load AI insights right now. Please try again later.';
+            this.cdr.markForCheck();
+          });
+        },
       });
   }
 
@@ -151,7 +175,19 @@ export class DashboardPage {
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.subs.unsubscribe();
+    this.socketService.disconnectFromSocket();
     this.authService.logout();
+  }
+
+  private handlePricesError(err: any) {
+    console.error('prices_error event', err);
+    const fallbackMessage = 'Unable to load live prices right now. Please try again later.';
+    const incomingMessage = typeof err === 'string' ? err : err?.message;
+    this.ngZone.run(() => {
+      this.pricesLoading = false;
+      this.pricesErrorMessage = incomingMessage || fallbackMessage;
+      this.cdr.markForCheck();
+    });
   }
 }

@@ -46,7 +46,7 @@
   </ng-container>
 
   <ng-template #priceStates>
-    <div class="state-container" *ngIf="loading; else emptyState">
+    <div class="state-container" *ngIf="loading; else errorOrEmpty">
       <div class="skeleton-list">
         <div class="skeleton-card" *ngFor="let _ of placeholderRows">
           <div class="skeleton skeleton-title"></div>
@@ -56,6 +56,11 @@
       </div>
       <span class="state-label">Loading live prices...</span>
     </div>
+    <ng-template #errorOrEmpty>
+      <div class="state-container error" *ngIf="errorMessage; else emptyState">
+        <p>{{ errorMessage }}</p>
+      </div>
+    </ng-template>
     <ng-template #emptyState>
       <div class="state-container empty">
         <p>No live price data available yet.</p>

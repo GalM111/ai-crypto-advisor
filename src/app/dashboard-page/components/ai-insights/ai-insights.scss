@@ -215,6 +215,17 @@ $ai-color-primary: #667eea;
       }
     }
   }
+
+  .error-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    color: $dislike-color;
+    font-weight: 600;
+  }
 }
 
 // Icon Animation

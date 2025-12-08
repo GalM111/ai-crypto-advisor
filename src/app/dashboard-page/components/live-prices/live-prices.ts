@@ -11,6 +11,7 @@ import { UserData } from '../../../models/user-data';
 export class LivePrices {
   @Input() prices: any = [];
   @Input() loading = true;
+  @Input() errorMessage = '';
   readonly placeholderRows = Array.from({ length: 3 });
   private likedCoins = new Set<string>();
   private dislikedCoins = new Set<string>();

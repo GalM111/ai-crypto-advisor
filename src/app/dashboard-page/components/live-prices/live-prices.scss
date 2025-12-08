@@ -207,6 +207,11 @@ $dislike-color: #e53935;
       font-weight: 500;
     }
 
+    &.error {
+      color: $red-trend;
+      font-weight: 600;
+    }
+
     .state-label {
       font-size: 0.9rem;
       font-weight: 600;
