@@ -76,7 +76,7 @@
           </button>
         </mat-form-field>
 
-        <button mat-raised-button class="btn-register" (click)="onRegister()">
+        <button mat-raised-button class="btn-register" (click)="onRegister()" [disabled]="isLoading">
           <span *ngIf="!isLoading">Create Account</span>
           <span *ngIf="isLoading" class="loader"></span>
         </button>
